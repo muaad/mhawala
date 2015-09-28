@@ -16,6 +16,9 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'figaro', '>= 1.0.0.rc1'
 gem 'haml-rails'
+gem 'paperclip'
+gem 'savon'
+gem 'httparty'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_20]
