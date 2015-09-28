@@ -1,15 +1,191 @@
 !!!
-%html
+%html{:lang => "en"}
   %head
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %title= content_for?(:title) ? yield(:title) : 'Mhawala'
-    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Mhawala'}"}
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
-    = csrf_meta_tags
-  %body
-    %header
-      = render 'layouts/navigation'
-    %main{:role => "main"}
-      = render 'layouts/messages'
-      = yield
+    %meta{:charset => "UTF-8"}
+      %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}
+        %title MHawala
+        / start:bootstrap v3.2.0
+        = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false
+        = javascript_include_tag 'application', 'subjects', 'data-turbolinks-track' => false
+        %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}
+          / start:style for this page
+          / <link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">
+          / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+          / WARNING: Respond.js doesn't work if you view the page via file://
+          /[if lt IE 9]
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  %body.cl-default.fixed
+    / start:navbar top
+    %header.header
+      %a.logo{:href => "index.html"}
+        %i.fa.fa-money
+        MHawala
+      / Header Navbar: style can be found in header.less
+      %nav.navbar.navbar-static-top{:role => "navigation"}
+        / Sidebar toggle button
+        %a.navbar-btn.sidebar-toggle{"data-target" => "#atas", "data-toggle" => "offcanvas", :href => "#", :role => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        #atas.collapse.navbar-collapse
+          .navbar-left
+            %ul.nav.navbar-nav
+              %li.dropdown.messages-menu
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  %i.fa.fa-bell
+                  %span.label.label-success 4
+                %ul.dropdown-menu
+                  %li.header You have 4 new notifications
+                  %li
+                    / inner menu: contains the actual data
+                    %ul.menu
+                      %li
+                        / start message
+                        %a{:href => "#"}
+                          .pull-left
+                            %img.img-circle{:alt => "User Image", :src => "img/avatar3.png"}/
+                          %h4
+                            Support Team
+                            %small
+                              %i.fa.fa-clock-o
+                              5 mins
+                          %p Why not buy a new awesome theme?
+                      / end message
+                      %li
+                        %a{:href => "#"}
+                          .pull-left
+                            %img.img-circle{:alt => "user image", :src => "img/avatar2.png"}/
+                          %h4
+                            Arjuna Design Team
+                            %small
+                              %i.fa.fa-clock-o
+                              2 hours
+                          %p Why not buy a new awesome theme?
+                      %li
+                        %a{:href => "#"}
+                          .pull-left
+                            %img.img-circle{:alt => "user image", :src => "img/avatar.png"}/
+                          %h4
+                            Developers
+                            %small
+                              %i.fa.fa-clock-o
+                              Today
+                          %p Why not buy a new awesome theme?
+                      %li
+                        %a{:href => "#"}
+                          .pull-left
+                            %img.img-circle{:alt => "user image", :src => "img/avatar2.png"}/
+                          %h4
+                            Sales Department
+                            %small
+                              %i.fa.fa-clock-o
+                              Yesterday
+                          %p Why not buy a new awesome theme?
+                      %li
+                        %a{:href => "#"}
+                          .pull-left
+                            %img.img-circle{:alt => "user image", :src => "img/avatar.png"}/
+                          %h4
+                            Reviewers
+                            %small
+                              %i.fa.fa-clock-o
+                              2 days
+                          %p Why not buy a new awesome theme?
+                  %li.footer
+                    %a{:href => "#"} See All Notifications
+              %li.form-search
+                %input.form-control{:placeholder => "Search..", :type => "text"}
+          .navbar-right
+            %ul.nav.navbar-nav
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  %img.img-circle.img-responsive.img-user{:src => "img/user.jpg"}
+                    %strong @john
+                %ul.dropdown-menu.dropdown-login
+                  %li
+                    .navbar-login
+                      .row
+                        .col-lg-3
+                          %p.text-center
+                            %img.img-responsive.img-circle{:src => "img/user.jpg"}
+                        .col-lg-9
+                          %p.text-left
+                            %strong John Doe
+                          %p.text-left.small johndoe@email.com
+                          .row
+                            .col-md-6
+                              %small
+                                %a{:href => "#"} Edit Profile
+                            .col-md-6
+                              %small
+                                %a{:href => "#"} Notification
+                  %li.divider
+                  %li
+                    .navbar-login.navbar-login-session
+                      %a.btn.btn-default.btn-square.btn-block{:href => "#"} Logout
+    / end:navbar top
+    / start:wrapper body
+    .wrapper.row-offcanvas.row-offcanvas-left
+      / start:left sidebar
+      %aside.left-side.sidebar-offcanvas
+        %section.sidebar
+          / Sidebar user panel
+          .user-panel
+            .image
+              %img.img-circle{:alt => "User Image", :src => "img/user.jpg"}/
+            .info
+              %p Hello, John Doe
+              %small{:style => "color: #eee;"} Welcome Back
+          / sidebar menu: : style can be found in sidebar.less
+          %ul.sidebar-menu
+            %li.active
+              %a{:href => "#"}
+                %i.fa.fa-dashboard
+                %span Dashboard
+            %li.treeview
+              %a{:href => ""}
+                %i.fa.fa-users
+                %span Users
+                %i.fa.fa-angle-left.pull-right
+              %ul.treeview-menu
+                %li
+                  %a{:href => "users_path?type=agent"}
+                    %i.fa.fa-user
+                    Agents
+                %li
+                  %a{:href => "users_path?type=customer"}
+                    %i.fa.fa-user
+                    Customers
+            %li.treeview
+              %a{:href => ""}
+                %i.fa.fa-money
+                %span Payments
+                %i.fa.fa-angle-left.pull-right
+              %ul.treeview-menu
+                %li
+                  %a{:href => 'timetable_path'}
+                    %i.fa.fa-circle-o
+                    Pending Payments
+                %li
+                  %a{:href => 'pages_settings_path'}
+                    %i.fa.fa-circle-o
+                    Authorized Payments
+            %li.treeview
+              %a{:href => ""}
+                %i.fa.fa-cog
+                %span Settings
+                %i.fa.fa-angle-left.pull-right
+              %ul.treeview-menu
+                %li
+                  %a{:href => 'timetable_path'}
+                    %i.fa.fa-edit
+                    Edit your profile
+                %li
+                  %a{:href => 'pages_settings_path'}
+                    %i.fa.fa-lock
+                    Edit Account
+      %aside.right-side
+        = yield
+    = javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => false
