@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928144745) do
+ActiveRecord::Schema.define(version: 20150928150708) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 20150928144745) do
   end
 
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
+
+  create_table "user_accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "account_id"
+    t.boolean  "is_preferred", default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "user_accounts", ["account_id"], name: "index_user_accounts_on_account_id"
+  add_index "user_accounts", ["user_id"], name: "index_user_accounts_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                   default: "",    null: false
