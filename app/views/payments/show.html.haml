@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Sender:
+  = @payment.sender
+%p
+  %b Recipient:
+  = @payment.recipient
+%p
+  %b Amount:
+  = @payment.amount
+%p
+  %b Reference number:
+  = @payment.reference_number
+%p
+  %b Transaction number:
+  = @payment.transaction_number
+%p
+  %b Account:
+  = @payment.account
+%p
+  %b Sent:
+  = @payment.sent
+
+= link_to 'Edit', edit_payment_path(@payment)
+\|
+= link_to 'Back', payments_path
