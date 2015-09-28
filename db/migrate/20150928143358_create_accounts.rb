@@ -3,7 +3,7 @@ class CreateAccounts < ActiveRecord::Migration
     create_table :accounts do |t|
       t.string :name
       t.string :email
-      t.boolean :active
+      t.boolean :active, default: false
       t.references :user, index: true
 
       t.timestamps null: false
