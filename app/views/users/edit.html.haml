@@ -1,0 +1,6 @@
+%section.content
+	%h1
+		Edit User
+		%small
+			= @user.name if !@user.name.blank?
+	= render 'form'

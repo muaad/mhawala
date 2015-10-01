@@ -24,7 +24,24 @@ class PaymentsController < ApplicationController
   # POST /payments
   # POST /payments.json
   def create
+    sender = User.find_by(phone_number: params[:sender_phone_number])
+    recipient = User.find_by(phone_number: params[:recipient_phone_number])
+
+    if sender.nil?
+      sender = User.new phone_number: params[:sender_phone_number], name: params[:sender_name], email: params[:sender_email], user_type: "Customer"
+      sender.password = "12345678"
+      sender.save!
+    end
+
+    if recipient.nil?
+      recipient = User.new phone_number: params[:recipient_phone_number], name: params[:recipient_name], email: params[:recipient_email], user_type: "Customer"
+      recipient.password = "12345678"
+      recipient.save!
+    end
+
     @payment = Payment.new(payment_params)
+    @payment.sender = sender
+    @payment.recipient = recipient
 
     respond_to do |format|
       if @payment.save
@@ -37,11 +54,37 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def delete_multiple
+    deleted = 0
+    params[:delete_payments].split(',').each do |id|
+      Payment.find_by(id: id).destroy
+      deleted = deleted + 1
+    end
+    redirect_to payments_path, notice: "You have deleted #{deleted} payments."
+  end
+
   # PATCH/PUT /payments/1
   # PATCH/PUT /payments/1.json
   def update
+    sender = User.find_by(phone_number: params[:sender_phone_number])
+    recipient = User.find_by(phone_number: params[:recipient_phone_number])
+
+    if sender.nil?
+      sender = User.new phone_number: params[:sender_phone_number], name: params[:sender_name], email: params[:sender_email], user_type: "Customer"
+      sender.password = "12345678"
+      sender.save!
+    end
+
+    if recipient.nil?
+      recipient = User.new phone_number: params[:recipient_phone_number], name: params[:recipient_name], email: params[:recipient_email], user_type: "Customer"
+      recipient.password = "12345678"
+      recipient.save!
+    end
     respond_to do |format|
       if @payment.update(payment_params)
+        @payment.sender = sender
+        @payment.recipient = recipient
+        @payment.save!
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
         format.json { render :show, status: :ok, location: @payment }
       else

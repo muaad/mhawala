@@ -52,27 +52,27 @@ ActiveRecord::Schema.define(version: 20150928180753) do
   add_index "user_accounts", ["user_id"], name: "index_user_accounts_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                   default: "",    null: false
-    t.string   "encrypted_password",      default: "",    null: false
+    t.string   "email",                    default: "",    null: false
+    t.string   "encrypted_password",       default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",           default: 0,     null: false
+    t.integer  "sign_in_count",            default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "name"
-    t.string   "profie_pic_file_name"
-    t.string   "profie_pic_content_type"
-    t.integer  "profie_pic_file_size"
-    t.datetime "profie_pic_updated_at"
     t.string   "phone_number"
-    t.boolean  "is_admin",                default: false
-    t.boolean  "is_support",              default: false
+    t.boolean  "is_admin",                 default: false
+    t.boolean  "is_support",               default: false
     t.string   "user_type"
+    t.string   "profile_pic_file_name"
+    t.string   "profile_pic_content_type"
+    t.integer  "profile_pic_file_size"
+    t.datetime "profile_pic_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

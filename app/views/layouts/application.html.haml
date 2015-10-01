@@ -144,26 +144,28 @@
               %a{:href => "#"}
                 %i.fa.fa-dashboard
                 %span Dashboard
-            %li.treeview
-              %a{:href => ""}
+            %li
+              %a{:href => "#{users_path}?user_type=staff"}
+                %i.fa.fa-briefcase
+                %span Staff
+            %li
+              %a{:href => "#{users_path}?user_type=customer"}
                 %i.fa.fa-users
-                %span Users
-                %i.fa.fa-angle-left.pull-right
-              %ul.treeview-menu
-                %li
-                  %a{:href => "users_path?type=agent"}
-                    %i.fa.fa-user
-                    Agents
-                %li
-                  %a{:href => "users_path?type=customer"}
-                    %i.fa.fa-user
-                    Customers
+                %span Customers
             %li.treeview
               %a{:href => ""}
                 %i.fa.fa-money
                 %span Payments
                 %i.fa.fa-angle-left.pull-right
               %ul.treeview-menu
+                %li
+                  %a{:href => new_payment_path}
+                    %i.fa.fa-plus
+                    Create New Payment
+                %li
+                  %a{:href => payments_path}
+                    %i.fa.fa-circle-o
+                    All
                 %li
                   %a{:href => 'timetable_path'}
                     %i.fa.fa-circle-o
@@ -176,6 +178,16 @@
               %a{:href => ""}
                 %i.fa.fa-cog
                 %span Settings
+                %i.fa.fa-angle-left.pull-right
+              %ul.treeview-menu
+                %li
+                  %a{:href => 'timetable_path'}
+                    %i.fa.fa-edit
+                    Edit your profile
+            %li.treeview
+              %a{:href => ""}
+                %i.fa.fa-bar-chart-o
+                %span Reports
                 %i.fa.fa-angle-left.pull-right
               %ul.treeview-menu
                 %li

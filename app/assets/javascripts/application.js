@@ -16,6 +16,8 @@
 // require bootstrap.min
 //= require arjuna
 //= require tasks
+//= require users
+//= require payments
 //= require moment.min
 //= require jquery-ui.custom.min
 //= require fullcalendar.min
@@ -42,3 +44,10 @@
 // require_tree .
 //= require_self
 
+$(function() {
+	$('#example').dataTable( {
+	    "aaSorting": [[ 4, "desc" ]]
+	} );
+
+	$('.datetimepicker').datetimepicker();
+})

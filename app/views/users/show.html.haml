@@ -1,0 +1,23 @@
+%section.content
+	- if notice
+		.alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+			%button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+				%span{"aria-hidden" => "true"} ×
+			= notice
+	%h1
+		User
+	/ start:breadcrumb
+	%ol.breadcrumb
+		%li
+			%a{:href => "#"}
+				%i.fa.fa-user
+				= @user.name if !@user.name.blank?
+		.pull-right
+			.btn-toolbar{role: "toolbar"}
+				.btn-group     
+					%a.btn.btn-default{href: edit_user_path(@user)}
+						%i.fa.fa-edit
+						Edit      
+					%a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
+						%i.fa.fa-times
+						Delete 

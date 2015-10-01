@@ -1,0 +1,43 @@
+.row
+	.col-lg-12
+		%section.panel
+			= form_for @user do |f|
+				.panel-body
+					- if @user.errors.any?
+						#error_explanation
+							%h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+							%ul
+								- @user.errors.full_messages.each do |msg|
+									%li= msg
+					.form-group
+						- if !@user.nil?
+							%input#user_id{type: "hidden", value: @user.id}
+						%lable Name
+						= f.text_field :name, class: "form-control"
+					.form-group
+						%lable Phone Number
+						= f.text_field :phone_number, class: "form-control"
+					.form-group
+						%lable Email
+						= f.text_field :email, class: "form-control"
+						- if params[:user_type].blank?
+							.form-group
+								%lable Role
+								%select.form-control{name: "user[user_type]"}
+									%option{value: "Staff"}
+										Staff
+									%option{value: "Customer"}
+										Customer
+							.form-group
+								%label Is this staff member an admin?
+								= f.check_box :is_admin, class: "form-control"
+						- else
+							- if params[:user_type] == "staff" && current_user.is_admin
+								.form-group
+									%label Is this staff member an admin?
+									= f.check_box :is_admin, class: "form-control"
+				.panel-footer
+					.actions.pull-right
+						%button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+							%i.fa.fa-save
+							Save

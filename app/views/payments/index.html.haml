@@ -1,33 +1,253 @@
-%h1 Listing payments
+%section.content
+  - if notice
+    .alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+        %span{"aria-hidden" => "true"} ×
+      = notice
+  %h1
+    Payments
+    %small All money sent through the system
+  / start:breadcrumb
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-money
+        Payments
+    %li
+      = link_to "All", "#"
+    .pull-right
+      .btn-toolbar{role: "toolbar"}
+        .btn-group
+          - if params[:user_type].blank?
+            %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+              %i.fa.fa-filter
+              Filter
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li
+                %a{href: "?period=day"}
+                  Today
+              %li
+                %a{href: "?period=week"}
+                  Week
+              %li
+                %a{href: "?period=month"}
+                  Month
+          %a#delete-payments.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_payment_modal"}
+            %i.fa.fa-times
+            Delete     
+          %a#edit-payment.btn.btn-default
+            %i.fa.fa-edit
+            Edit    
+          %a#add-payment.btn.btn-default{href: new_payment_path}
+            %i.fa.fa-plus
+            New
+          %a#reverse-payment.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#reverse_modal"}
+            %i.fa.fa-mail-forward
+            Reverse
+  / end:breadcrumb
+  / start:content
+  .row
+    .col-md-12
+      / start:dynamic data table
+      .adv-table
+        %table#example.display.table.table-bordered.table-striped
+          %thead
+            %tr
+              %th.no-sort
+                = check_box_tag "toggle_payments"
+              %th Amount
+              %th Sender
+              %th Recipient
+              %th Reference Number
+              %th Date
+          %tbody.payments_table
+            - @payments.each do |payment|
+              %tr.gradeX
+                %td
+                  = check_box_tag "payment[payment.id]", payment.id
+                %td
+                  = link_to payment.amount, payment
+                %td
+                  = "#{payment.sender.name}(#{payment.sender.phone_number})"
+                %td
+                  = "#{payment.recipient.name}(#{payment.recipient.phone_number})"
+                %td
+                  = payment.reference_number
+                %td
+                  = payment.created_at
 
-%table
-  %thead
-    %tr
-      %th Sender
-      %th Recipient
-      %th Amount
-      %th Reference number
-      %th Transaction number
-      %th Account
-      %th Sent
-      %th
-      %th
-      %th
+  #delete_payment_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Delete Payments
+        = form_tag delete_multiple_payments_path do |f|
+          .modal-body
+            %label#lbl-msg
+            = hidden_field_tag 'delete_payments'
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              Cancel
+            %button.btn.btn-danger{:type => "submit"} 
+              %i.fa.fa-trash-o
+              Delete
 
-  %tbody
-    - @payments.each do |payment|
-      %tr
-        %td= payment.sender
-        %td= payment.recipient
-        %td= payment.amount
-        %td= payment.reference_number
-        %td= payment.transaction_number
-        %td= payment.account
-        %td= payment.sent
-        %td= link_to 'Show', payment
-        %td= link_to 'Edit', edit_payment_path(payment)
-        %td= link_to 'Destroy', payment, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  / #edit_user_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  /   .modal-dialog
+  /     .modal-content
+  /       .modal-header
+  /         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+  /           %span{"aria-hidden" => "true"} &times;
+  /         %h4#myModalLabel.modal-title Edit User
+  /       = form_tag update_user_path, method: "post" do |f|
+  /         .modal-body
+  /           / %label#lbl-msg
+  /           = hidden_field_tag :id
+  /           = hidden_field_tag :user_type, params[:user_type]
+  /           .form-group
+  /             %lable Name
+  /             = text_field_tag :name, nil, class: "form-control"
+  /           .form-group
+  /             %lable Phone Number
+  /             = text_field_tag :phone_number, nil, class: "form-control"
+  /           .form-group
+  /             %lable Email
+  /             = text_field_tag :email, nil, class: "form-control"
+  /             - if params[:user_type].blank?
+  /               .form-group
+  /                 %lable Role
+  /                 %select.form-control{name: "user_type"}
+  /                   %option{value: "Staff"}
+  /                     Staff
+  /                   %option{value: "Customer"}
+  /                     Customer
+  /               .form-group
+  /                 %label Is this staff member an admin?
+  /                 = check_box_tag :is_admin, nil, class: "form-control"
+  /             - else
+  /               = hidden_field_tag :user_type, nil, value: params[:user_type]
+  /               - if params[:user_type] == "staff" && current_user.is_admin
+  /                 .form-group
+  /                   %label Is this staff member an admin?
+  /                   = check_box_tag :is_admin, nil, class: "form-control"
+  /         .modal-footer
+  /           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+  /             %i.fa.fa-times
+  /             Cancel
+  /           %button.btn.btn-success{:type => "submit"} 
+  /             %i.fa.fa-edit
+  /             Edit
 
-%br
+  / #class_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  /   .modal-dialog
+  /     .modal-content
+  /       .modal-header
+  /         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+  /           %span{"aria-hidden" => "true"} &times;
+  /         %h4#myModalLabel.modal-title Add Staff to class
+  /       = form_tag add_to_class_path do |f|
+  /         .modal-body
+  /           %label#lbl-msg
+  /           = hidden_field_tag 'users'
+  /           / %label Select a class from the dropdown below
+  /           %select.form-control{name: 'stream'}
+  /             / %option{value: "select"} Select a class
+  /             - Stream.all.each do |s|
+  /               %option{value: s.name}
+  /                 = s.name
+  /         .modal-footer
+  /           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+  /             %i.fa.fa-times
+  /             Cancel
+  /           %button.btn.btn-success{:type => "submit"} 
+  /             %i.fa.fa-plus
+  /             Add to class
 
-= link_to 'New Payment', new_payment_path
+  / #add_user_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  /   .modal-dialog
+  /     .modal-content
+  /       .modal-header
+  /         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+  /           %span{"aria-hidden" => "true"} &times;
+  /         - if params[:user_type] == "staff"
+  /           %h4#myModalLabel.modal-title Add Staff Member
+  /         - else
+  /           %h4#myModalLabel.modal-title Add Customer
+  /       = form_for(@new_user, :url => add_user_path, :html => { method: :post, :role => 'form'}) do |f|
+  /         .modal-body
+  /           .form-group
+  /             %lable Name
+  /             = f.text_field :name, class: "form-control"
+  /           .form-group
+  /             %lable Phone Number
+  /             = f.text_field :phone_number, class: "form-control"
+  /           .form-group
+  /             %lable Email
+  /             = f.text_field :email, class: "form-control"
+  /             - if params[:user_type].blank?
+  /               .form-group
+  /                 %lable Role
+  /                 %select.form-control{name: "user[user_type]"}
+  /                   %option
+  /                     Staff
+  /                   %option
+  /                     Customer
+  /               .form-group
+  /                 %label Is this staff member an admin?
+  /                 = f.check_box :is_admin, class: "form-control"
+  /             - else
+  /               = f.hidden_field :user_type, value: params[:user_type]
+  /               - if params[:user_type] == "staff"
+  /                 .form-group
+  /                   %label Is this staff member an admin?
+  /                   = f.check_box :is_admin, class: "form-control"
+  /         .modal-footer
+  /           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+  /             %i.fa.fa-times
+  /             Cancel
+  /           %button.btn.btn-success{:type => "submit"} 
+  /             %i.fa.fa-plus
+  /             - if params[:user_type] == "staff"
+  /               Add Staff Member
+  /             - else
+  /               Add Customer
+
+  / #edit_user_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  /   .modal-dialog
+  /     .modal-content
+  /       .modal-header
+  /         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+  /           %span{"aria-hidden" => "true"} &times;
+  /         %h4#myModalLabel.modal-title Edit Staff Member
+  /       = form_for(@new_user, :url => edit_user_registration_path, :html => { :method => :put, :role => 'form'}) do |f|
+  /         .modal-body
+  /           .form-group
+  /             %lable Name
+  /             = f.text_field :name, class: "form-control"
+  /           .form-group
+  /             %lable Phone Number
+  /             = f.text_field :phone_number, class: "form-control"
+  /           .form-group
+  /             %lable Email
+  /             = f.text_field :email, class: "form-control"
+  /           .form-group
+  /             %lable Role
+  /             %select.form-control{name: "user[user_type]"}
+  /               %option
+  /                 Teacher
+  /               %option
+  /                 Non Teaching Staff
+  /           .form-group
+  /             %label Is this staff member an admin?
+  /             = f.check_box :is_admin, class: "form-control"
+  /         .modal-footer
+  /           %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+  /             %i.fa.fa-times
+  /             Cancel
+  /           %button.btn.btn-success{:type => "submit"} 
+  /             %i.fa.fa-plus
+  /             Add Staff Member
