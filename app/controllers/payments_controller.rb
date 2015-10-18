@@ -15,6 +15,14 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   def new
     @payment = Payment.new
+    if !params[:user_type].blank?
+      user = User.find(params[:user])
+      if params[:user_type] == "sender"
+        @payment.sender = user
+      elsif params[:user_type] == "recipient"
+        @payment.recipient = user
+      end
+    end
   end
 
   # GET /payments/1/edit

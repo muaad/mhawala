@@ -14,7 +14,18 @@
 				= @user.name if !@user.name.blank?
 		.pull-right
 			.btn-toolbar{role: "toolbar"}
-				.btn-group     
+				.btn-group
+					%button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+						%i.fa.fa-plus
+						Record remittance
+						%span.caret
+					%ul.dropdown-menu{:role => "menu"}
+						%li
+							%a{href: "#{new_payment_path}?user=#{@user.id}&user_type=sender"}
+								Sender
+						%li
+							%a{href: "#{new_payment_path}?user=#{@user.id}&user_type=recipient"}
+								Recipient   
 					%a.btn.btn-default{href: edit_user_path(@user)}
 						%i.fa.fa-edit
 						Edit      
