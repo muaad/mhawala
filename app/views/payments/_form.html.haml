@@ -31,17 +31,17 @@
                 = f.label :phone_number
                 .iconic-input
                   %i.fa.fa-phone
-                  %input#sender_phone_number{name: 'sender_phone_number', class: "form-control", value: "#{@payment.nil?? '' : @payment.sender.phone_number}"}
+                  %input#sender_phone_number.typeahead{name: 'sender_phone_number', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.phone_number}"}
               .form-group
                 = f.label :name
                 .iconic-input
                   %i.fa.fa-user
-                  %input#sender_name{name: 'sender_name', class: "form-control", value: "#{@payment.nil?? '' : @payment.sender.name}"}
+                  %input#sender_name{name: 'sender_name', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.name}"}
               .form-group
                 = f.label :email
                 .iconic-input
                   %i.fa.fa-envelope
-                  %input#sender_email{name: 'sender_email', class: "form-control", value: "#{@payment.nil?? '' : @payment.sender.email}"}
+                  %input#sender_email{name: 'sender_email', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.email}"}
             .col-lg-6
               %br
               %h3 Recipient's Details
@@ -50,19 +50,26 @@
                 = f.label :phone_number
                 .iconic-input
                   %i.fa.fa-phone
-                  %input#recipient_phone_number{name: 'recipient_phone_number', class: "form-control", value: "#{@payment.nil?? '' : @payment.recipient.phone_number}"}
+                  %input#recipient_phone_number{name: 'recipient_phone_number', class: "form-control", value: "#{@payment.recipient.nil?? '' : @payment.recipient.phone_number}"}
               .form-group
                 = f.label :name
                 .iconic-input
                   %i.fa.fa-user
-                  %input#recipient_name{name: 'recipient_name', class: "form-control", value: "#{@payment.nil?? '' : @payment.recipient.name}"}
+                  %input#recipient_name{name: 'recipient_name', class: "form-control", value: "#{@payment.recipient.nil?? '' : @payment.recipient.name}"}
               .form-group
                 = f.label :email
                 .iconic-input
                   %i.fa.fa-envelope
-                  %input#recipient_email{name: 'recipient_email', class: "form-control", value: "#{@payment.nil?? '' : @payment.recipient.email}"}
+                  %input#recipient_email{name: 'recipient_email', class: "form-control", value: "#{@payment.recipient.nil?? '' : @payment.recipient.email}"}
         .panel-footer
-          .actions.pull-right
-            %button#save-payment.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
-              %i.fa.fa-save
-              Save
+          .actions.row
+            .col-lg-6
+              .checkbox
+                %label
+                  %input{:type => "checkbox"}
+                    Send through Mpesa
+            .col-lg-6
+              %span.pull-right
+                %button#save-payment.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+                  %i.fa.fa-save
+                  Save
