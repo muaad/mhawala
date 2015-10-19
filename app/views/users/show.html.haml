@@ -5,7 +5,10 @@
 				%span{"aria-hidden" => "true"} ×
 			= notice
 	%h1
-		User
+		- if @user.user_type.downcase == "staff"
+			Staff
+		- elsif @user.user_type.downcase == "customer"
+			Customer
 	/ start:breadcrumb
 	%ol.breadcrumb
 		%li
@@ -32,3 +35,40 @@
 					%a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
 						%i.fa.fa-times
 						Delete 
+	%section.panel
+		.row
+			.col-lg-12
+				.panel-body
+					%h3
+						= @user.name
+						|
+						= @user.user_type
+					%hr
+					%br
+					.row
+						.col-lg-4
+							%i.fa.fa-phone
+							= @user.phone_number
+						.col-lg-4
+							%i.fa.fa-envelope
+							- if !@user.email.blank?
+								= @user.email
+							- else
+								No email
+						.col-lg-4
+							%i.fa.fa-briefcase
+							Account balance: 
+							$40,500
+					%br
+					.row
+						.col-lg-4
+							%i.fa.fa-mail-forward
+							Money sent:
+							= link_to @amount_sent, "#{payments_path}?user=#{@user.id}&user_type=sender", style: "color: blue"
+						.col-lg-4
+							%i.fa.fa-mail-reply
+							Money received:
+							= link_to @amount_received, "#{payments_path}?user=#{@user.id}&user_type=recipient", style: "color: blue"
+						.col-lg-4
+							%i.fa.fa-calendar
+							= time_formater(@user.created_at)

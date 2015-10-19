@@ -36,7 +36,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @payments = @user.payments
+    @amount_sent = Payment.where(sender: @user).sum(:amount)
+    @amount_received = Payment.where(recipient: @user).sum(:amount)
     # unless @user == current_user || current_user.is_admin
     #   redirect_to set_users_path, :alert => "Access denied."
     # end

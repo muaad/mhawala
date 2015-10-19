@@ -1,27 +1,72 @@
-%p#notice= notice
-
-%p
-  %b Sender:
-  = @payment.sender
-%p
-  %b Recipient:
-  = @payment.recipient
-%p
-  %b Amount:
-  = @payment.amount
-%p
-  %b Reference number:
-  = @payment.reference_number
-%p
-  %b Transaction number:
-  = @payment.transaction_number
-%p
-  %b Account:
-  = @payment.account
-%p
-  %b Sent:
-  = @payment.sent
-
-= link_to 'Edit', edit_payment_path(@payment)
-\|
-= link_to 'Back', payments_path
+%section.content
+  - if notice
+    .alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+        %span{"aria-hidden" => "true"} ×
+      = notice
+  %h1
+    Remittance
+  / start:breadcrumb
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-money
+        Remittance
+    .pull-right
+      .btn-toolbar{role: "toolbar"}
+        .btn-group
+          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+            %i.fa.fa-plus
+            Record remittance
+            %span.caret
+          / %ul.dropdown-menu{:role => "menu"}
+          /   %li
+          /     %a{href: "#{new_payment_path}?user=#{@user.id}&user_type=sender"}
+          /       Sender
+          /   %li
+          /     %a{href: "#{new_payment_path}?user=#{@user.id}&user_type=recipient"}
+          /       Recipient   
+          %a.btn.btn-default{href: edit_payment_path(@payment)}
+            %i.fa.fa-edit
+            Edit      
+          %a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_modal"}
+            %i.fa.fa-times
+            Delete 
+  %section.panel
+    .row
+      .col-lg-12
+        .panel-body
+          %h3
+            Remittance
+            |
+            = @payment.amount
+          %hr
+          %br
+          .row
+            .col-lg-4
+              %i.fa.fa-money
+              = @payment.amount
+            .col-lg-4
+              %i.fa.fa-user
+              = link_to @payment.sender.name, payment_path(@payment.sender)
+            .col-lg-4
+              %i.fa.fa-user
+              = link_to @payment.recipient.name, payment_path(@payment.recipient)
+          %br
+          .row
+            .col-lg-4
+              %i.fa.fa-list-ol
+              Reference Number:
+              = @payment.reference_number
+            .col-lg-4
+              - if @payment.sent
+                %i.fa.fa-check
+                Money sent:
+                YES
+              - else
+                %i.fa.fa-remove
+                Money sent:
+                NO
+            .col-lg-4
+              %i.fa.fa-calendar
+              = time_formater(@payment.created_at)

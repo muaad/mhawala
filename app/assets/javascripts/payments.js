@@ -45,6 +45,7 @@ $(function() {
 	    e.preventDefault();
 	  }
 	});
+
 	var editPage = window.location.pathname.indexOf("edit") >= 0 && window.location.pathname.indexOf("payments") >= 0
 	if (window.location.pathname === "/payments/new" || editPage) {
 		$.get('/users.json', function(data) {

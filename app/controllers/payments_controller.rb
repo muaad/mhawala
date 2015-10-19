@@ -5,6 +5,14 @@ class PaymentsController < ApplicationController
   # GET /payments.json
   def index
     @payments = Payment.all
+    if !params[:user_type].blank?
+      user = User.find(params[:user])
+      if params[:user_type] == "sender"
+        @payments = Payment.where sender: user
+      elsif params[:user_type] == "recipient"
+        @payments = Payment.where recipient: user
+      end
+    end
   end
 
   # GET /payments/1

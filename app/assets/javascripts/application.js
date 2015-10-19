@@ -13,7 +13,6 @@
 // require jquery.infinite-pages
 //= require jquery-1.11.1.min
 //= require jquery_ujs
-// require bootstrap.min
 //= require arjuna
 //= require tasks
 //= require users
