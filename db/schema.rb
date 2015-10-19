@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928180753) do
+ActiveRecord::Schema.define(version: 20151019052242) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -32,13 +32,20 @@ ActiveRecord::Schema.define(version: 20150928180753) do
     t.string   "transaction_number"
     t.integer  "account_id"
     t.boolean  "sent",               default: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "channel",            default: "Hawala"
+    t.boolean  "withdrawn",          default: false
+    t.integer  "recorded_by_id"
+    t.integer  "withdrawn_by_id"
+    t.datetime "withdrawn_at"
   end
 
   add_index "payments", ["account_id"], name: "index_payments_on_account_id"
   add_index "payments", ["recipient_id"], name: "index_payments_on_recipient_id"
+  add_index "payments", ["recorded_by_id"], name: "index_payments_on_recorded_by_id"
   add_index "payments", ["sender_id"], name: "index_payments_on_sender_id"
+  add_index "payments", ["withdrawn_by_id"], name: "index_payments_on_withdrawn_by_id"
 
   create_table "user_accounts", force: :cascade do |t|
     t.integer  "user_id"
