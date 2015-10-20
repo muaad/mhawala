@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019052242) do
+ActiveRecord::Schema.define(version: 20151020082024) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20151019052242) do
     t.integer  "recorded_by_id"
     t.integer  "withdrawn_by_id"
     t.datetime "withdrawn_at"
+    t.string   "sent_from"
+    t.string   "sent_to"
   end
 
   add_index "payments", ["account_id"], name: "index_payments_on_account_id"
@@ -72,14 +74,14 @@ ActiveRecord::Schema.define(version: 20151019052242) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "name"
-    t.string   "phone_number"
-    t.boolean  "is_admin",                 default: false
-    t.boolean  "is_support",               default: false
-    t.string   "user_type"
     t.string   "profile_pic_file_name"
     t.string   "profile_pic_content_type"
     t.integer  "profile_pic_file_size"
     t.datetime "profile_pic_updated_at"
+    t.string   "phone_number"
+    t.boolean  "is_admin",                 default: false
+    t.boolean  "is_support",               default: false
+    t.string   "user_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
