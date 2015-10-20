@@ -13,6 +13,8 @@ function userRecord(element, data) {
 	       // Updated stored value
 	       var nameField = $(userType + '_name');
 	       var emailField = $(userType + '_email');
+	       var sentFromField = $('#payment_sent_from');
+	       var sentToField = $('#payment_sent_to');
 	       nameField.val("");
 	       emailField.val("");
 	       elem.data('oldVal', elem.val());
@@ -24,8 +26,15 @@ function userRecord(element, data) {
 	       		if (record != null) {
 	       			var nameField = $(userType + '_name');
 	       			var emailField = $(userType + '_email');
+			        var sentFromField = $('#payment_sent_from');
+			        var sentToField = $('#payment_sent_to');
 	       			nameField.val(record.name);
 	       			emailField.val(record.email);
+	       			if (userType === "#sender") {
+	       				sentFromField.val(record.last_location);
+	       			} else{
+	       				sentToField.val(record.last_location);
+	       			};
 	       		}
 	       	}
 	       };

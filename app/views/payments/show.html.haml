@@ -15,17 +15,17 @@
     .pull-right
       .btn-toolbar{role: "toolbar"}
         .btn-group
-          %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-            %i.fa.fa-plus
-            Record remittance
-            %span.caret
-          / %ul.dropdown-menu{:role => "menu"}
-          /   %li
-          /     %a{href: "#{new_payment_path}?user=#{@user.id}&user_type=sender"}
-          /       Sender
-          /   %li
-          /     %a{href: "#{new_payment_path}?user=#{@user.id}&user_type=recipient"}
-          /       Recipient   
+          %a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#withdraw_payment_modal"}
+            - if !@payment.withdrawn
+              %i.fa.fa-money
+              Issue Withdrawal  
+            - else              
+              %i.fa.fa-remove
+              Cancel Withdrawal
+          - if @payment.channel != "Mpesa"
+            %a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#mpesa_modal"}
+              %i.fa.fa-mobile-phone
+              Send through Mpesa  
           %a.btn.btn-default{href: edit_payment_path(@payment)}
             %i.fa.fa-edit
             Edit      
@@ -48,10 +48,12 @@
               = @payment.amount
             .col-lg-4
               %i.fa.fa-user
-              = link_to @payment.sender.name, payment_path(@payment.sender)
+              Sender: 
+              = link_to "#{@payment.sender.name} (#{@payment.sender.phone_number})", user_path(@payment.sender)
             .col-lg-4
               %i.fa.fa-user
-              = link_to @payment.recipient.name, payment_path(@payment.recipient)
+              Recipient: 
+              = link_to "#{@payment.recipient.name} (#{@payment.recipient.phone_number})", user_path(@payment.recipient)
           %br
           .row
             .col-lg-4
@@ -69,4 +71,70 @@
                 NO
             .col-lg-4
               %i.fa.fa-calendar
+              Sent at: 
               = time_formater(@payment.created_at)
+          %br
+          .row
+            .col-lg-4
+              %i.fa.fa-briefcase
+              Remittance Recorded BY:
+              = link_to @payment.recorded_by.name, user_path(@payment.recorded_by) if !@payment.recorded_by.nil?
+            .col-lg-4
+              - if @payment.withdrawn
+                %i.fa.fa-briefcase
+                Withdrawal Recorded BY:
+                = link_to @payment.withdrawn_by.name, user_path(@payment.withdrawn_by) if !@payment.withdrawn_by.nil?
+              - else
+                %i.fa.fa-money
+                Not yet withdrawn
+            .col-lg-4
+              - if @payment.withdrawn
+                %i.fa.fa-clock-o
+                Withdrawn at: 
+                = time_formater(@payment.withdrawn_at)
+
+  #withdraw_payment_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title 
+            - if @payment.withdrawn
+              Cancel Withdrawal
+            - else
+              Issue Withdrawal
+        = form_tag withdraw_path(@payment) do |f|
+          .modal-body
+            %label
+              - if @payment.withdrawn
+                Are you sure you want to cancel withdrawal?
+              - else
+                Are you sure you want to make this withdrawal?
+          .modal-footer
+            %button.btn.btn-danger{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              No
+            %button.btn.btn-success{:type => "submit"} 
+              %i.fa.fa-money
+              Yes
+
+  #mpesa_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title 
+            Send money through Mpesa
+        = form_tag send_through_mpesa_path(@payment) do |f|
+          .modal-body
+            %label
+              = "Are you sure you want to send #{@payment.amount} to #{@payment.recipient.phone_number} through Mpesa?"
+          .modal-footer
+            %button.btn.btn-danger{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              No
+            %button.btn.btn-success{:type => "submit"} 
+              %i.fa.fa-money
+              Yes

@@ -23,6 +23,7 @@ gem 'acts_as_tenant'
 gem 'simple_xlsx_reader'
 gem 'spreadsheet'
 gem 'annotate'
+gem "font-awesome-rails"
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_20]

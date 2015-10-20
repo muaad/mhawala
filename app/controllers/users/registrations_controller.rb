@@ -11,6 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 	      user = User.find(resource.id)
 	      account = Account.create! email: user.email
 	      user.is_admin = true
+	      user.user_type = "staff"
 	      # user.account_id = account.id
 	      user.save!
 	      UserAccount.create! user_id: user.id, account_id: account.id

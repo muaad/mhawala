@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
-  before_action :set_payment, only: [:show, :edit, :update, :destroy]
+  before_action :set_payment, only: [:show, :edit, :update, :destroy, :send_through_mpesa, :withdraw]
+  before_filter :authenticate_user!
 
   # GET /payments
   # GET /payments.json
@@ -58,6 +59,14 @@ class PaymentsController < ApplicationController
     @payment = Payment.new(payment_params)
     @payment.sender = sender
     @payment.recipient = recipient
+
+    if params[:send_by_mpesa] == "on"
+      @payment.channel = "Mpesa"
+    else
+      @payment.sent = true
+    end
+
+    @payment.recorded_by_id = current_user.id
 
     respond_to do |format|
       if @payment.save
@@ -120,6 +129,17 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def send_through_mpesa
+    @payment.update(channel: "Mpesa", sent: false)
+    redirect_to @payment, notice: "#{@payment.amount} has been sent through Mpesa to #{@payment.recipient.phone_number}."
+  end
+
+  def withdraw
+    @payment.update(withdrawn: !@payment.withdrawn, withdrawn_by_id: current_user.id)
+    @payment.update(withdrawn_at: Time.now) if @payment.withdrawn
+    redirect_to @payment, notice: @payment.withdrawn ? "#{@payment.amount} has successfully been withdrawn." : "withdrawal has been cancelled!"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_payment
@@ -128,6 +148,6 @@ class PaymentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payment_params
-      params.require(:payment).permit(:sender_id, :recipient_id, :amount, :reference_number, :transaction_number, :account_id, :sent)
+      params.require(:payment).permit(:sender_id, :recipient_id, :amount, :reference_number, :transaction_number, :account_id, :sent, :channel, :withdrawn, :recorded_by_id, :withdrawn_by_id, :withdrawn_at, :sent_from, :sent_to)
     end
 end

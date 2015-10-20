@@ -31,7 +31,7 @@
                 = f.label :phone_number
                 .iconic-input
                   %i.fa.fa-phone
-                  %input#sender_phone_number.typeahead{name: 'sender_phone_number', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.phone_number}"}
+                  %input#sender_phone_number{name: 'sender_phone_number', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.phone_number}"}
               .form-group
                 = f.label :name
                 .iconic-input
@@ -42,6 +42,11 @@
                 .iconic-input
                   %i.fa.fa-envelope
                   %input#sender_email{name: 'sender_email', class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.email}"}
+              .form-group
+                = f.label :sent_from, "Sender Location"
+                .iconic-input
+                  %i.fa.fa-list-ol
+                  = f.text_field :sent_from, class: "form-control", value: "#{@payment.sender.nil?? '' : @payment.sender.last_location}"
             .col-lg-6
               %br
               %h3 Recipient's Details
@@ -61,12 +66,17 @@
                 .iconic-input
                   %i.fa.fa-envelope
                   %input#recipient_email{name: 'recipient_email', class: "form-control", value: "#{@payment.recipient.nil?? '' : @payment.recipient.email}"}
+              .form-group
+                = f.label :sent_to, "Recipient Location"
+                .iconic-input
+                  %i.fa.fa-list-ol
+                  = f.text_field :sent_to, class: "form-control", value: "#{@payment.recipient.nil?? '' : @payment.recipient.last_location}"
         .panel-footer
           .actions.row
             .col-lg-6
               .checkbox
                 %label
-                  %input{:type => "checkbox"}
+                  %input{:type => "checkbox", name: "send_by_mpesa"}
                     Send through Mpesa
             .col-lg-6
               %span.pull-right

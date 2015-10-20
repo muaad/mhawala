@@ -6,15 +6,14 @@
         %title MHawala
         / start:bootstrap v3.2.0
         = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false
-        = javascript_include_tag 'application', 'subjects', 'data-turbolinks-track' => false
-        %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}
-          / start:style for this page
-          / <link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">
-          / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-          / WARNING: Respond.js doesn't work if you view the page via file://
-          /[if lt IE 9]
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        / %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}
+        / start:style for this page
+        / <link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">
+        / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        / WARNING: Respond.js doesn't work if you view the page via file://
+        /[if lt IE 9]
+        / <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        / <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   %body.cl-default.fixed
     / start:navbar top
     %header.header
@@ -41,79 +40,43 @@
                   %li
                     / inner menu: contains the actual data
                     %ul.menu
-                      %li
-                        / start message
-                        %a{:href => "#"}
-                          .pull-left
-                            %img.img-circle{:alt => "User Image", :src => "img/avatar3.png"}/
-                          %h4
-                            Support Team
-                            %small
-                              %i.fa.fa-clock-o
-                              5 mins
-                          %p Why not buy a new awesome theme?
-                      / end message
-                      %li
-                        %a{:href => "#"}
-                          .pull-left
-                            %img.img-circle{:alt => "user image", :src => "img/avatar2.png"}/
-                          %h4
-                            Arjuna Design Team
-                            %small
-                              %i.fa.fa-clock-o
-                              2 hours
-                          %p Why not buy a new awesome theme?
-                      %li
-                        %a{:href => "#"}
-                          .pull-left
-                            %img.img-circle{:alt => "user image", :src => "img/avatar.png"}/
-                          %h4
-                            Developers
-                            %small
-                              %i.fa.fa-clock-o
-                              Today
-                          %p Why not buy a new awesome theme?
-                      %li
-                        %a{:href => "#"}
-                          .pull-left
-                            %img.img-circle{:alt => "user image", :src => "img/avatar2.png"}/
-                          %h4
-                            Sales Department
-                            %small
-                              %i.fa.fa-clock-o
-                              Yesterday
-                          %p Why not buy a new awesome theme?
-                      %li
-                        %a{:href => "#"}
-                          .pull-left
-                            %img.img-circle{:alt => "user image", :src => "img/avatar.png"}/
-                          %h4
-                            Reviewers
-                            %small
-                              %i.fa.fa-clock-o
-                              2 days
-                          %p Why not buy a new awesome theme?
+                      - Payment.last(4).each do |payment|
+                        %li
+                          / start message
+                          %a{:href => payment_path(payment)}
+                            .pull-left
+                              %img.img-circle{:alt => "User Image", :src => "/missing.jpg"}/
+                            %h4
+                              New Remittance
+                              %small
+                                %i.fa.fa-clock-o
+                                = time_ago_in_words(payment.created_at).gsub!("about", "")
+                            %p
+                              = "#{payment.sender.name} - #{payment.recipient.name} (#{payment.amount})"
                   %li.footer
-                    %a{:href => "#"} See All Notifications
+                    %a{:href => payments_path} See All Notifications
               %li.form-search
                 %input.form-control{:placeholder => "Search..", :type => "text"}
           .navbar-right
             %ul.nav.navbar-nav
               %li.dropdown
                 %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  %img.img-circle.img-responsive.img-user{:src => "img/user.jpg"}
-                    %strong @john
+                  %img.img-circle.img-responsive.img-user{:src => "#{current_user.profile_pic.url}"}
+                    %strong
+                      = "@#{current_user.name.split(' ').first}"
                 %ul.dropdown-menu.dropdown-login
                   %li
                     .navbar-login
                       .row
                         .col-lg-3
                           %p.text-center
-                            %img.img-responsive.img-circle{:src => "img/user.jpg"}
+                            %img.img-responsive.img-circle{:src => current_user.profile_pic.url}
                         .col-lg-9
                           %p.text-left
-                            %strong John Doe
-                          %p.text-left.small johndoe@email.com
+                            %strong
+                              = current_user.name
+                          %p.text-left.small
+                            = current_user.email
                           .row
                             .col-md-6
                               %small
@@ -134,9 +97,10 @@
           / Sidebar user panel
           .user-panel
             .image
-              %img.img-circle{:alt => "User Image", :src => "img/user.jpg"}/
+              %img.img-circle{:alt => "User Image", :src => current_user.profile_pic.url}/
             .info
-              %p Hello, John Doe
+              %p
+                = "Hello, #{current_user.name}"
               %small{:style => "color: #eee;"} Welcome Back
           / sidebar menu: : style can be found in sidebar.less
           %ul.sidebar-menu
@@ -201,4 +165,3 @@
       %aside.right-side
         = yield
     = javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => false
-    = javascript_include_tag 'typeahead', 'data-turbolinks-track' => false
