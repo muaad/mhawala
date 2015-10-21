@@ -1,0 +1,28 @@
+= form_for @exchange_rate do |f|
+  - if @exchange_rate.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@exchange_rate.errors.count, "error")} prohibited this exchange_rate from being saved:"
+      %ul
+        - @exchange_rate.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :account
+    = f.text_field :account
+  .field
+    = f.label :currency_one
+    = f.text_field :currency_one
+  .field
+    = f.label :currency_two
+    = f.text_field :currency_two
+  .field
+    = f.label :buying
+    = f.text_field :buying
+  .field
+    = f.label :selling
+    = f.text_field :selling
+  .field
+    = f.label :city
+    = f.text_field :city
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,31 @@
+%h1 Listing exchange_rates
+
+%table
+  %thead
+    %tr
+      %th Account
+      %th Currency one
+      %th Currency two
+      %th Buying
+      %th Selling
+      %th City
+      %th
+      %th
+      %th
+
+  %tbody
+    - @exchange_rates.each do |exchange_rate|
+      %tr
+        %td= exchange_rate.account
+        %td= exchange_rate.currency_one
+        %td= exchange_rate.currency_two
+        %td= exchange_rate.buying
+        %td= exchange_rate.selling
+        %td= exchange_rate.city
+        %td= link_to 'Show', exchange_rate
+        %td= link_to 'Edit', edit_exchange_rate_path(exchange_rate)
+        %td= link_to 'Destroy', exchange_rate, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Exchange rate', new_exchange_rate_path
