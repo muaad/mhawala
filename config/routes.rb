@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "users/registrations"}
   resources :users
 
-  root to: 'visitors#index'
+  root to: 'home#index'
   post "/users/add_user" => "users#create", :as => "add_user"
   # post "/users/update_user" => "users#update", :as => "update_user"
 

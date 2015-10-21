@@ -81,14 +81,14 @@
                           .row
                             .col-md-6
                               %small
-                                %a{:href => "#"} Edit Profile
+                                %a{:href => edit_user_registration_path} Edit Profile
                             .col-md-6
                               %small
                                 %a{:href => "#"} Notification
                   %li.divider
                   %li
                     .navbar-login.navbar-login-session
-                      %a.btn.btn-default.btn-square.btn-block{:href => "#"} Logout
+                      = link_to "Logout", destroy_user_session_path, method: :delete, "data-method" => "delete", class: "btn btn-default btn-square btn-block"
     / end:navbar top
     / start:wrapper body
     .wrapper.row-offcanvas.row-offcanvas-left
@@ -132,11 +132,11 @@
                     %i.fa.fa-circle-o
                     All
                 %li
-                  %a{:href => 'timetable_path'}
+                  %a{:href => "#{payments_path}?sent=0"}
                     %i.fa.fa-circle-o
                     Pending Payments
                 %li
-                  %a{:href => 'pages_settings_path'}
+                  %a{:href => "#{payments_path}?sent=1"}
                     %i.fa.fa-circle-o
                     Authorized Payments
             %li.treeview
@@ -146,7 +146,7 @@
                 %i.fa.fa-angle-left.pull-right
               %ul.treeview-menu
                 %li
-                  %a{:href => 'timetable_path'}
+                  %a{:href => edit_user_registration_path}
                     %i.fa.fa-edit
                     Edit your profile
             %li.treeview

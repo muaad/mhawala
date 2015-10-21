@@ -1,0 +1,50 @@
+!!!
+%html{:lang => "en"}
+  %head
+  %meta{:charset => "utf-8"}
+  %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+  %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+  %title Mobile Hawala | Hawala + Mobile Money
+  = stylesheet_link_tag 'public', media: 'all'
+  / = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Varela+Round', 'http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'
+  = javascript_include_tag 'public'
+  / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+  / WARNING: Respond.js doesn't work if you view the page via file://
+  /[if lt IE 9]
+  / = javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"
+  / = javascript_include_tag "https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"
+  :css
+    .fa {line-height: 2.5;}
+  %body
+    %header#home
+      / menu
+      %section#fixed-menu
+        .container
+          .row
+            .col-sm-3.text-left.logo
+              %a{:href => "#{root_path}"}
+                = image_tag("logo.jpg")
+            .col-sm-9.text-left.menu.right
+              %ul.left-nav
+                %li
+                  %a{:href => "#"} Features
+                %li
+                  %a{:href => "#"} Pricing
+                %li
+                  %a{:href => new_user_session_path} Login
+                %li
+                  %a.learn-more-btn.small{:href => new_user_registration_path} Create account
+    = yield
+
+    %footer
+      .container
+        .row
+          .col-md-6
+            %ul.legals
+              %li
+                %a{:href => "#"} Terms &amp; Conditions
+          .col-md-6.credit
+            %p
+              %a{href: "http://mursatech.com"} 
+                Mursatech LTD &copy;
+                = Time.now.year

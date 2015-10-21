@@ -1,0 +1,54 @@
+/* Individual tab styles */
+
+
+/*****************************/
+/* Triangle and line */
+/*****************************/
+
+.tabs-style-linetriangle nav a {
+	overflow: visible;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	-webkit-transition: color 0.2s;
+	transition: color 0.2s;
+	color: #00ADEE;
+}
+.tabs nav ul li a:hover, nav ul li a:focus{ color: #353535;}
+.tabs-style-linetriangle nav a span {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 1em;
+}
+
+.tabs-style-linetriangle nav li.tab-current a:after, 
+.tabs-style-linetriangle nav li.tab-current a:before {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: solid transparent;
+	content: '';
+	pointer-events: none;
+}
+
+.tabs-style-linetriangle nav li.tab-current a:after {
+	margin-left: -10px;
+	border-width: 10px;
+	border-top-color: #fff;
+}
+
+.tabs-style-linetriangle nav li.tab-current a:before {
+	margin-left: -11px;
+	border-width: 11px;
+	border-top-color: rgba(0,0,0,0.2);
+}
+
+@media screen and (max-width: 58em) {
+	.tabs-style-linetriangle nav {
+		font-size: 0.6em;
+	}
+}
+
+

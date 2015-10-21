@@ -204,14 +204,18 @@
 										%option
 											Customer
 								.form-group
-									%label Is this staff member an admin?
-									= f.check_box :is_admin, class: "form-control"
+									.checkbox
+										%label
+											%input{:type => "checkbox", name: "user[is_admin]"}
+											Is this staff member an admin?
 							- else
 								= f.hidden_field :user_type, value: params[:user_type]
 								- if params[:user_type] == "staff"
 									.form-group
-										%label Is this staff member an admin?
-										= f.check_box :is_admin, class: "form-control"
+										.checkbox
+											%label
+												%input{:type => "checkbox", name: "user[is_admin]"}
+												Is this staff member an admin?
 					.modal-footer
 						%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
 							%i.fa.fa-times

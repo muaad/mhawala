@@ -13,6 +13,12 @@ class PaymentsController < ApplicationController
       elsif params[:user_type] == "recipient"
         @payments = Payment.where recipient: user
       end
+    elsif !params[:sent].blank?
+        if params[:sent] == "1"
+          @payments = Payment.where sent: true
+        elsif params[:sent] == "0"
+            @payments = Payment.where.not sent: true
+        end
     end
   end
 

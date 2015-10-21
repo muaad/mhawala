@@ -29,13 +29,17 @@
 									%option{value: "Customer"}
 										Customer
 							.form-group
-								%label Is this staff member an admin?
-								= f.check_box :is_admin, class: "form-control"
+								.checkbox
+									%label
+										%input{:type => "checkbox", name: "user[is_admin]"}
+										Is this staff member an admin?
 						- else
 							- if params[:user_type] == "staff" && current_user.is_admin
 								.form-group
-									%label Is this staff member an admin?
-									= f.check_box :is_admin, class: "form-control"
+									.checkbox
+										%label
+											%input{:type => "checkbox", name: "user[is_admin]"}
+											Is this staff member an admin?
 				.panel-footer
 					.actions.pull-right
 						%button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}

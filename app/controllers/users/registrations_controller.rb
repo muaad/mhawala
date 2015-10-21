@@ -1,8 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 
-
 	def create
+		render layout: "public"
 		build_resource(sign_up_params)
 		resource_saved = resource.save
 
@@ -30,6 +30,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
 	      respond_with resource
 	    end
 	end	
+
+	def resource_name
+	  :user
+	end
+
+	def resource
+	  @resource ||= User.new
+	end
+
+	def devise_mapping
+	 @devise_mapping ||= Devise.mappings[:user]
+	end
+
+	def new
+		resource
+		render layout: "public"
+	end
 
 	protected
 

@@ -1,0 +1,215 @@
+/ hero
+%section#hero.hero
+	.container
+		.row
+			.col-md-12.wp1.content
+				%h2.introheader Get out there and make friends
+				%form.form-inline
+					.form-group
+						%label.sr-only{:for => "exampleInputEmail3"} Find Events
+						%input#exampleInputEmail3.form-control{:placeholder => "Find Events", :type => "email"}
+					.form-group
+						%label.sr-only{:for => "exampleInputEmail3"} Location
+						%input#exampleInputEmail3.form-control{:placeholder => "Location", :type => "email"}
+					.form-group
+						%select#sel1.form-control
+							%option Dates
+							%option 2
+							%option 3
+							%option 4
+					%button.btn.btn-primary{:type => "submit"} SEARCH
+/ upcoming events
+%section#intro.section-padding
+	.container
+		.row
+			.col-md-12.wp1
+				%h2.introheader Popular upcoming events
+		.row
+			.col-md-12
+				.features-wrapper
+					.features-wrapper
+						.col-md-4.wp2.event.mb
+							.white-panel.pn
+								.white-header
+									%h3 Book Club Kilimani mums meetup: Introductions and pleasantries
+								.event-details{style: "text-align: left; padding-left: 15px;"}
+									/ %p.fa.fa-comment
+									/ 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+									.fa.fa-map-marker
+										Nairobi
+									%br
+									.fa.fa-calendar
+										Tue 20th July 2015
+									%br
+									.fa.fa-sitemap
+										Science & Technology
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						/ .col-md-4.wp2.event
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						/ .col-md-4.wp2.event
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						/ .col-md-4.wp2.event
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						/ .col-md-4.wp2.event
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						/ .col-md-4.wp2.event
+						/ 	.image
+						/ 		%a{:href => ""}
+						/ 		= image_tag("event.png", class: "img-responsive")
+						/ 		/ %img.img-responsive{:src => "img/event.png"}
+						/ 	%a{:href => ""}
+						/ 		%h3
+						/ 			Book Club Kilimani mums meetup:
+						/ 			Introductions and pleasantries
+						/ 	%h2
+						/ 		%a{:href => ""} Social / Intellectual
+						/ 	%p
+						/ 		CBD Nairobi  |  Mon Jun 1 9:00PM
+						/ 		%br
+						/ 			%i #free
+						.clearfix
+			/ 
+		.clearfix
+			%br
+		.row
+			.col-md-5
+			.col-md-2
+				%a.learn-more-btn{:href => "#"} Load More Events
+			.col-md-5
+/ categories
+%section#categories.swag.text-center
+	.container
+		.row
+			.col-md-8.col-md-offset-2
+				%h2.introheader EVENTS BY CATEGORIES
+/ testimonials
+%section#testimonials.clients.text-center.section-padding
+	.container
+		.row
+			.col-md-12
+				%h2.introheader People are talking about Ticket way
+		/ testimonials
+		.row
+			#testimonialsSlider
+				%ul.slides
+					/ 1
+					%li
+						.row.avatar
+							= image_tag("profile.jpg")
+							%h3 John Doe
+							%em Turn up lover
+						.row
+							.col-md-3
+							.col-md-6
+								%p
+									Lorem ipsum dolor sit amet, consectetur
+									adipiscing elit. Nunc ultricies nulla non
+									metus pulvinar imperdiet. Praesent non
+									adipiscing libero.
+							.col-md-3
+					/ 
+					%li
+						.row.avatar
+							= image_tag("profile.jpg")
+							%h3 John Doe
+							%em Turn up lover
+						.row
+							.col-md-3
+							.col-md-6
+								%p
+									Lorem ipsum dolor sit amet, consectetur
+									adipiscing elit. Nunc ultricies nulla non
+									metus pulvinar imperdiet. Praesent non
+									adipiscing libero.
+							.col-md-3
+/ contact
+%section#contact.dark-bg.text-center.section-padding.contact-wrap
+	%a.up-btn.fa.fa-chevron-up{:href => "#top"}
+	.container
+		.row
+			.col-md-4
+			.col-md-4
+				/ contact form starts here
+				%h2.introheader Create event
+				%p
+					Lorem ipsum dolor sit amet, consectetur
+					adipiscing elit. Nunc ultricies nulla non
+					metus pulvinar imperdiet. Praesent non
+					adipiscing libero.
+				%br
+					%a.learn-more-btn.small{:href => "#"} Create event
+					.row
+						%br.cleafix
+							%ul.social-buttons
+								%li
+									%a.social-btn.fa.fa-facebook{:href => "", :target => "_blank"}
+								%li
+									%a.social-btn.fa.fa-twitter{:href => "", :target => "_blank"}
+								%li
+									%a.social-btn.fa.fa-instagram{:href => "", :target => "_blank"}
+			.col-md-4

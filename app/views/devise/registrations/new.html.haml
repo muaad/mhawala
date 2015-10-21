@@ -1,0 +1,29 @@
+%section.content
+  %h1
+    New User
+    %small
+      Create account
+  .row
+    .col-lg-12
+      %section.panel
+        .authform
+          = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f|
+            .panel-body
+              = devise_error_messages!
+              .form-group
+                = f.label :name
+                = f.text_field :name, :autofocus => true, class: 'form-control'
+              .form-group
+                = f.label :email
+                = f.email_field :email, class: 'form-control'
+              .form-group
+                = f.label :password
+                = f.password_field :password, class: 'form-control'
+              .form-group
+                = f.label :password_confirmation
+                = f.password_field :password_confirmation, class: 'form-control'
+            .panel-footer.sign-up
+              .actions.pull-right
+                %button.btn.btn-sm.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+                  %i.fa.fa-plus
+                  Sign Up
