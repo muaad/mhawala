@@ -12,5 +12,7 @@ class Payment < ActiveRecord::Base
   belongs_to :recipient, class_name: "User"
   belongs_to :recorded_by, class_name: "User"
   belongs_to :withdrawn_by, class_name: "User"
+  belongs_to :from_agent, class_name: "Agent"
+  belongs_to :to_agent, class_name: "Agent"
   belongs_to :account
 end
