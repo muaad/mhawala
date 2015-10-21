@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :agents
+
   resources :payments
 
   get "/users/upload" => "users#upload_page", as: "users_upload_page"

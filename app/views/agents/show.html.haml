@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @agent.name
+%p
+  %b Location:
+  = @agent.location
+%p
+  %b City:
+  = @agent.city
+%p
+  %b Country:
+  = @agent.country
+%p
+  %b Latitude:
+  = @agent.latitude
+%p
+  %b Longitude:
+  = @agent.longitude
+%p
+  %b Account:
+  = @agent.account
+%p
+  %b Verified:
+  = @agent.verified
+
+= link_to 'Edit', edit_agent_path(@agent)
+\|
+= link_to 'Back', agents_path

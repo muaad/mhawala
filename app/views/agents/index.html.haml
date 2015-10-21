@@ -1,0 +1,35 @@
+%h1 Listing agents
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Location
+      %th City
+      %th Country
+      %th Latitude
+      %th Longitude
+      %th Account
+      %th Verified
+      %th
+      %th
+      %th
+
+  %tbody
+    - @agents.each do |agent|
+      %tr
+        %td= agent.name
+        %td= agent.location
+        %td= agent.city
+        %td= agent.country
+        %td= agent.latitude
+        %td= agent.longitude
+        %td= agent.account
+        %td= agent.verified
+        %td= link_to 'Show', agent
+        %td= link_to 'Edit', edit_agent_path(agent)
+        %td= link_to 'Destroy', agent, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Agent', new_agent_path
