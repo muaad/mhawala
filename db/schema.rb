@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021193354) do
+ActiveRecord::Schema.define(version: 20151021200433) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,19 @@ ActiveRecord::Schema.define(version: 20151021193354) do
 
   add_index "agents", ["account_id"], name: "index_agents_on_account_id"
 
+  create_table "exchange_rates", force: :cascade do |t|
+    t.integer  "account_id"
+    t.string   "currency_one"
+    t.string   "currency_two"
+    t.float    "buying"
+    t.float    "selling"
+    t.string   "city"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "exchange_rates", ["account_id"], name: "index_exchange_rates_on_account_id"
+
   create_table "payments", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
@@ -56,12 +69,16 @@ ActiveRecord::Schema.define(version: 20151021193354) do
     t.datetime "withdrawn_at"
     t.string   "sent_from"
     t.string   "sent_to"
+    t.integer  "from_agent_id"
+    t.integer  "to_agent_id"
   end
 
   add_index "payments", ["account_id"], name: "index_payments_on_account_id"
+  add_index "payments", ["from_agent_id"], name: "index_payments_on_from_agent_id"
   add_index "payments", ["recipient_id"], name: "index_payments_on_recipient_id"
   add_index "payments", ["recorded_by_id"], name: "index_payments_on_recorded_by_id"
   add_index "payments", ["sender_id"], name: "index_payments_on_sender_id"
+  add_index "payments", ["to_agent_id"], name: "index_payments_on_to_agent_id"
   add_index "payments", ["withdrawn_by_id"], name: "index_payments_on_withdrawn_by_id"
 
   create_table "user_accounts", force: :cascade do |t|
@@ -97,8 +114,10 @@ ActiveRecord::Schema.define(version: 20151021193354) do
     t.boolean  "is_admin",                 default: false
     t.boolean  "is_support",               default: false
     t.string   "user_type"
+    t.integer  "agent_id"
   end
 
+  add_index "users", ["agent_id"], name: "index_users_on_agent_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
