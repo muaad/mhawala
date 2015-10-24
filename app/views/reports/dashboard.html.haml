@@ -1,0 +1,285 @@
+%section  
+  .row
+    .col-lg-12
+      %h1
+        Dashboard
+        %small Recent Activity
+  .row
+    .col-lg-12.flot-index
+      .row
+        .col-md-6
+          .box1
+            %section
+              %header.font-bold.padder-v
+                .pull-right
+                  .btn-group
+                    %button.btn.btn-sm.btn-rounded.btn-default.dropdown-toggle{data: { toggle: "dropdown" }}
+                      %span.dropdown-label
+                        Last 6 Hours
+                      %span.caret
+                    %ul.dropdown-menu.dropdown-select
+                      %li
+                        %a{:href => "#{reports_remittances_path}?period=Day"}
+                          %input{:name => "b", :type => "radio"} Day
+                      %li
+                        %a{:href => "#{reports_remittances_path}?period=Week"}
+                          %input{:name => "b", :type => "radio"} Week
+                      %li
+                        %a{:href => "#{reports_remittances_path}?period=Month"}
+                          %input{:name => "b", :type => "radio"} Month
+
+                  / %a.btn.btn-default.btn-icon.btn-rounded.btn-sm
+                  /   Go
+                %h4 Recent Message Stats
+              .panel-body
+                #chart{style: "height: 210px;"}
+
+
+        .col-md-6.active_contacts
+          .box1
+            %section
+              %header.font-bold.padder-v        
+                .pull-right
+                  .btn-group
+                    %button.btn.btn-sm.btn-rounded.btn-default.dropdown-toggle{data: { toggle: "dropdown" }}
+                      %span.dropdown-label
+                        Last 6 Hours
+                      %span.caret
+                    %ul.dropdown-menu.dropdown-select
+                      %li
+                        %a{:href => "#{reports_agents_path}?period=Day"}
+                          %input{:name => "b", :type => "radio"} Day
+                      %li
+                        %a{:href => "#{reports_agents_path}?period=Week"}
+                          %input{:name => "b", :type => "radio"} Week
+                      %li
+                        %a{:href => "#{reports_agents_path}?period=Month"}
+                          %input{:name => "b", :type => "radio"} Month
+
+                  / %a.btn.btn-default.btn-icon.btn-rounded.btn-sm
+                  /   Go
+                %h4 Top 5 Most Active Customers
+            .panel-body
+              %table.ui.table.segment.attached
+                %thead
+                  %tr
+                    %th Name
+                    %th Phone Number
+                    %th Money Sent
+                    %th Money Received
+                %tbody
+                  - User.where(user_type: "Customer").first(5).each do |user|
+                    %tr
+                      %td
+                        = link_to user.name, user_path(user)
+                      %td
+                        = user.phone_number
+                      %td
+                        = user.amount_sent
+                      %td
+                        = user.amount_received
+          .box1
+            %section
+              %header.font-bold.padder-v        
+                %h4 Top 5 most active agents
+            .panel-body
+              %table.ui.table.segment.attached
+                %thead
+                  %tr
+                    %th Name
+                    %th Phone Number
+                    %th Remittances Recorded
+                    %th Withdrawals Authorised
+                %tbody
+                  - User.where(user_type: "Staff").first(5).each do |user|
+                    %tr
+                      %td
+                        = link_to user.name, user_path(user)
+                      %td
+                        = user.phone_number
+                      %td
+                        = user.remittances_recorded
+                      %td
+                        = user.withdrawals_recorded
+
+  / .site-information
+  /   .row
+  /     .col-sm-6.col-md-3
+  /       .the-box.bg-info.tiles-information
+  /         .tiles-inner.text-center
+  /           %p
+  /             RESPONSE TIMES
+  /           %h1.bolded
+  /             = @today_response_times
+  /           .progress.progress-xs
+  /             .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "80", :role => "progressbar", :style => "width: 0"}
+  /           %p
+  /             - if @today_response_times > @yesterday_response_times
+  /               %i.fa.fa-arrow-up
+  /               %small 
+  /                 = "Better than yesterday ( #{(((@today_response_times - @yesterday_response_times) / @yesterday_response_times) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-up
+  /             - elsif @today_response_times < @yesterday_response_times
+  /               %i.fa.fa-arrow-down
+  /               %small 
+  /                 = "Worse than yesterday ( #{(((@yesterday_response_times - @today_response_times) / @yesterday_response_times) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-down
+  /             - else
+  /               %i.fa.fa-arrow-right
+  /               %small No change
+  /               %i.fa.fa-arrow-left
+  /     .col-sm-6.col-md-3
+  /       .the-box.bg-danger.tiles-information
+  /         .tiles-inner.text-center
+  /           %p
+  /             ACTIVITY
+  /           %h1.bolded
+  /             = Message.all.created_between(6.hours.ago, Time.now).count
+  /           .progress.progress-xs
+  /             .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "80", :role => "progressbar", :style => "width: 0"}
+  /           %p
+  /             - if Message.all.today.count > Message.all.yesterday.count
+  /               %i.fa.fa-arrow-up
+  /               %small 
+  /                 = "Better than yesterday ( #{(((Message.all.today.count - Message.all.yesterday.count) / [Message.all.yesterday.count,1].max) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-up
+  /             - elsif Message.all.today.count < Message.all.yesterday.count
+  /               %i.fa.fa-arrow-down
+  /               %small 
+  /                 = "Worse than yesterday ( #{(((Message.all.yesterday.count - Message.all.today.count) / [Message.all.yesterday.count, 1].max) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-down
+  /             - else
+  /               %i.fa.fa-arrow-right
+  /               %small No change
+  /               %i.fa.fa-arrow-left
+  /     .col-sm-6.col-md-3
+  /       .the-box.bg-danger.tiles-information
+  /         .tiles-inner.text-center
+  /           %p
+  /             REACH
+  /           %h1.bolded
+  /             = calculate_reach(Time.now.beginning_of_day, Time.now.end_of_day)
+  /           .progress.progress-xs
+  /             .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "80", :role => "progressbar", :style => "width: 0"}
+  /           %p
+  /             - if calculate_reach(Time.now.beginning_of_day, Time.now.end_of_day) > calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)
+  /               %i.fa.fa-arrow-up
+  /               %small 
+  /                 = "Better than yesterday ( #{(((calculate_reach(Time.now.beginning_of_day, Time.now.end_of_day) - calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)) / calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-up
+  /             - elsif calculate_reach(Time.now.beginning_of_day, Time.now.end_of_day) < calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)
+  /               %i.fa.fa-arrow-down
+  /               %small 
+  /                 = "Worse than yesterday ( #{(((calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day) - calculate_reach(Time.now.beginning_of_day, Time.now.end_of_day)) / calculate_reach(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)) * 100).round(2)}% )"
+  /               %i.fa.fa-arrow-down
+  /             - else
+  /               %i.fa.fa-arrow-right
+  /               %small No change
+  /               %i.fa.fa-arrow-left
+  /     / .col-sm-6.col-md-3
+  /     /   .the-box.bg-info.tiles-information
+  /     /     .tiles-inner.text-center
+  /     /       %p
+  /     /         LINKS
+  /     /       %h1.bolded -
+  /     /       .progress.progress-xs
+  /     /         .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "80", :role => "progressbar", :style => "width: 0"}
+  /     /       %p
+  /     /         %i.fa.fa-arrow-right
+  /     /         %small No change
+  /     /         %i.fa.fa-arrow-left
+  
+  .site-information-2
+    .row
+      .col-sm-6.col-md-3
+        .panel
+          .panel-heading.bg-facebook.text-center
+            %a{href: "#"}
+              %i.fa.fa-3x.fa-users
+          .padder-v.text-center.clearfix
+            .col-xs-6
+              .h3.font-bold
+                = User.where(user_type: "Staff").count
+              .text-muted
+                Customers
+            .col-xs-6
+              .h3.font-bold
+                = User.where(user_type: "Customer").count
+              .text-muted
+                Staff
+      .col-sm-6.col-md-3
+        .panel
+          .panel-heading.bg-twitter.text-center
+            %a{href: "#"}
+              %i.fa.fa-3x.fa-money
+          .padder-v.text-center.clearfix
+            .col-xs-6
+              .h3.font-bold
+                450
+              .text-muted
+                Remittances
+            .col-xs-6
+              .h3.font-bold
+                450
+              .text-muted
+                Withdrawals
+      .col-sm-6.col-md-3
+        .panel
+          .panel-heading.bg-dribbble.text-center
+            %a{href: "#"}
+              %i.fa.fa-3x.fa-photo
+          .padder-v.text-center.clearfix
+            .col-xs-6
+              .h3.font-bold
+                450
+              .text-muted
+                Images
+            .col-xs-6
+              .h3.font-bold
+                450
+              .text-muted
+                Videos
+      .col-sm-6.col-md-3
+        .panel
+          .panel-heading.bg-facebook.text-center
+            %a{href: "#"}
+              %i.fa.fa-3x.fa-list
+          .padder-v.text-center.clearfix
+            .col-xs-6
+              .h3.font-bold
+                736
+              .text-muted
+                Lists
+            .col-xs-6
+              .h3.font-bold
+                736
+              .text-muted
+                Broadcasts
+  / = render "gallery"
+/ :javascript
+/   $(document).ready(function() {
+/     var incoming = #{@last_six_hours_in.to_a};
+/     var outgoing = #{@last_six_hours_out.to_a};
+
+/     console.log("About to plot chart");
+/     chart = new Ongair.TimeSeries([incoming, outgoing], ["Incoming Messages", "Outgoing Messages"], '#chart');
+/     chart.plot();
+
+/     if ($('#cal-heatmap').length > 0) {
+/       var calendar = new CalHeatMap();
+/       calendar.init({
+/         id: "activity-chart",
+/         range: 10,
+/         start: new Date("#{10.days.ago.beginning_of_day}"),
+/         data: "#{reports_activity_path}",
+/         domain: "day"
+/       });      
+/     }
+    
+/     if ($('.flot-pie-donut').length > 0) {
+/       series = #{@trends.to_a};
+/       pie = new Ongair.Pie(series, ".flot-pie-donut");
+/     }    
+/   });
+
+/   

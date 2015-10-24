@@ -64,11 +64,11 @@
 						.col-lg-4
 							%i.fa.fa-mail-forward
 							Money sent:
-							= link_to @amount_sent, "#{payments_path}?user=#{@user.id}&user_type=sender", style: "color: blue"
+							= link_to @user.amount_sent, "#{payments_path}?user=#{@user.id}&user_type=sender", style: "color: blue"
 						.col-lg-4
 							%i.fa.fa-mail-reply
 							Money received:
-							= link_to @amount_received, "#{payments_path}?user=#{@user.id}&user_type=recipient", style: "color: blue"
+							= link_to @user.amount_received, "#{payments_path}?user=#{@user.id}&user_type=recipient", style: "color: blue"
 						.col-lg-4
 							%i.fa.fa-calendar
 							= time_formater(@user.created_at)

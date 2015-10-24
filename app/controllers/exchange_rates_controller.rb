@@ -24,17 +24,31 @@ class ExchangeRatesController < ApplicationController
   # POST /exchange_rates
   # POST /exchange_rates.json
   def create
-    @exchange_rate = ExchangeRate.new(exchange_rate_params)
+    @exchange_rate = ExchangeRate.find_by(currency_one: exchange_rate_params[:currency_one], currency_two: exchange_rate_params[:currency_two], city: exchange_rate_params[:city])
+    if @exchange_rate.nil?
+      @exchange_rate = ExchangeRate.new(exchange_rate_params)
+    else
+      @exchange_rate.update(exchange_rate_params)
+    end
 
     respond_to do |format|
       if @exchange_rate.save
-        format.html { redirect_to @exchange_rate, notice: 'Exchange rate was successfully created.' }
+        format.html { redirect_to exchange_rates_path, notice: 'Exchange rate was successfully created.' }
         format.json { render :show, status: :created, location: @exchange_rate }
       else
         format.html { render :new }
         format.json { render json: @exchange_rate.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def delete_multiple
+    deleted = 0
+    params[:delete_exchange_rates].split(',').each do |id|
+      ExchangeRate.find(id).destroy
+      deleted = deleted + 1
+    end
+    redirect_to exchange_rates_path, notice: "You have deleted #{deleted} exchange rates."
   end
 
   # PATCH/PUT /exchange_rates/1

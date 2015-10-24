@@ -17,6 +17,8 @@
 //= require tasks
 //= require users
 //= require payments
+//= require exchange_rates
+//= require jquery.editabletable
 //= require moment.min
 //= require jquery-ui.custom.min
 //= require fullcalendar.min

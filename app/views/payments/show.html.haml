@@ -15,6 +15,9 @@
     .pull-right
       .btn-toolbar{role: "toolbar"}
         .btn-group
+          %a.btn.btn-default{href: "#"}
+            %i.fa.fa-print
+            Print
           %a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#withdraw_payment_modal"}
             - if !@payment.withdrawn
               %i.fa.fa-money

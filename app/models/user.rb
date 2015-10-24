@@ -14,4 +14,28 @@ class User < ActiveRecord::Base
   	location = ""
   	location = payments.last.sent_from || payments.last.sent_to if !payments.blank?
   end
+
+  def amount_sent
+    Payment.where(sender: self).sum(:amount)
+  end
+
+  def amount_received
+    Payment.where(recipient: self).sum(:amount)
+  end
+
+  def remittances_recorded
+    remittances = 0.0
+    if user_type == "Staff"
+      remittances = Payment.where(recorded_by: self).sum(:amount)
+    end
+    remittances
+  end
+
+  def withdrawals_recorded
+    withdrawals = 0.0
+    if user_type == "Staff"
+      withdrawals = Payment.where(withdrawn_by: self).sum(:amount)
+    end
+    withdrawals
+  end
 end

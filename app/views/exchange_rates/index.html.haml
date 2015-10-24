@@ -1,31 +1,79 @@
-%h1 Listing exchange_rates
+%section.content
+  - if notice
+    .alert.alert-success.alert-dismissible.fade.in{:role => "alert"}
+      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+        %span{"aria-hidden" => "true"} ×
+      = notice
+  %h1
+    Exchange Rates
+    %small Manage your currency exchange rates here
+  / start:breadcrumb
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-money
+        Exchange Rates
+    %li
+      = link_to "All", "#"
+    .pull-right
+      .btn-toolbar{role: "toolbar"}
+        .btn-group
+          %a#delete-exchange_rates.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#delete_exchange_rate_modal"}
+            %i.fa.fa-times
+            Delete     
+          %a#edit-exchange_rate.btn.btn-default
+            %i.fa.fa-edit
+            Edit    
+          %a#add-exchange_rate.btn.btn-default{href: new_exchange_rate_path}
+            %i.fa.fa-plus
+            New
+  / end:breadcrumb
+  / start:content
+  .row
+    .col-md-12
+      / start:dynamic data table
+      .adv-table
+        %table#example.exchange-rate.display.table.table-bordered.table-striped
+          %thead
+            %tr
+              %th.no-sort
+                = check_box_tag "toggle_exchange_rates"
+              %th Currency 1
+              %th Currency 2
+              %th Buying
+              %th Selling
+              %th City
+          %tbody.exchange_rates_table
+            - @exchange_rates.each do |exchange_rate|
+              %tr.gradeX
+                %td
+                  = check_box_tag "exchange_rate[exchange_rate.id]", exchange_rate.id
+                %td
+                  = exchange_rate.currency_one
+                %td
+                  = exchange_rate.currency_two
+                %td.editable.buying{data: { id: exchange_rate.id }}
+                  = exchange_rate.buying
+                %td.editable.selling{data: { id: exchange_rate.id }}
+                  = exchange_rate.selling
+                %td
+                  = exchange_rate.city
 
-%table
-  %thead
-    %tr
-      %th Account
-      %th Currency one
-      %th Currency two
-      %th Buying
-      %th Selling
-      %th City
-      %th
-      %th
-      %th
-
-  %tbody
-    - @exchange_rates.each do |exchange_rate|
-      %tr
-        %td= exchange_rate.account
-        %td= exchange_rate.currency_one
-        %td= exchange_rate.currency_two
-        %td= exchange_rate.buying
-        %td= exchange_rate.selling
-        %td= exchange_rate.city
-        %td= link_to 'Show', exchange_rate
-        %td= link_to 'Edit', edit_exchange_rate_path(exchange_rate)
-        %td= link_to 'Destroy', exchange_rate, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Exchange rate', new_exchange_rate_path
+  #delete_exchange_rate_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Delete Payments
+        = form_tag 'delete_multiple_exchange_rates_path' do |f|
+          .modal-body
+            %label#lbl-msg
+            = hidden_field_tag 'delete_exchange_rates'
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} 
+              %i.fa.fa-times
+              Cancel
+            %button.btn.btn-danger{:type => "submit"} 
+              %i.fa.fa-trash-o
+              Delete
