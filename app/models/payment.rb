@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: payments
+#
+#  id                 :integer          not null, primary key
+#  sender_id          :integer
+#  recipient_id       :integer
+#  amount             :float
+#  reference_number   :string
+#  transaction_number :string
+#  account_id         :integer
+#  sent               :boolean          default(FALSE)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  channel            :string           default("Hawala")
+#  withdrawn          :boolean          default(FALSE)
+#  recorded_by_id     :integer
+#  withdrawn_by_id    :integer
+#  withdrawn_at       :datetime
+#  sent_from          :string
+#  sent_to            :string
+#  from_agent_id      :integer
+#  to_agent_id        :integer
+#  currency_id        :integer
+#
+
 class Payment < ActiveRecord::Base
 	scope :created_between, lambda {|start_date, end_date| where("created_at >= ? AND created_at <= ?", start_date, end_date )}
 	scope :last_month, lambda { where("created_at >= ? and created_at <= ?", Time.now.beginning_of_month - 1.month, (Time.now.beginning_of_month - 1.month).end_of_month )}		
