@@ -1,0 +1,99 @@
+.receipt.hidden
+  .row.invoice
+    .col-md-12
+      %div
+        .invoice-main
+          .invoice-head
+            .text-center
+              %h1
+                AMANA MONEY TRANSFER
+              %p Qadhasho
+              %p Tel - Fax: 55555666
+              %p www.amanaonline.co
+              %h4 Receipt Voucher
+              %p
+                = "User: Muaad Abdirahman"
+              %p
+                R.V.No:
+                = @payment.reference_number
+          .invoice-body
+            .row
+              .col-lg-8
+                .transaction-details
+                  .row
+                    .col-lg-3
+                      Tran. Date:
+                    .col-lg-3
+                      = time_formater(@payment.created_at)
+                    .col-lg-3
+                      Amount (USD):
+                    .col-lg-3
+                      = @payment.amount
+                  .row
+                    .col-lg-3
+                      Commission:
+                    .col-lg-3
+                      1
+                    .col-lg-3
+                      Total:
+                    .col-lg-3
+                      = "#{@payment.amount + 1}"
+                  .row
+                    .col-lg-3
+                      Beneficiary Name:
+                    .col-lg-9
+                      = @payment.recipient.name
+                  .row
+                    .col-lg-3
+                      Telephone:
+                    .col-lg-3
+                      = @payment.recipient.phone_number
+                    .col-lg-3
+                      Address:
+                    .col-lg-3                      
+                  .row
+                    .col-lg-3
+                      Agent code:
+                    .col-lg-3
+                      NRB
+                    .col-lg-3
+                      City:
+                    .col-lg-3
+                      = @payment.sent_to                      
+                  .row
+                    .col-lg-3
+                      Sender Name:
+                    .col-lg-9
+                      = @payment.sender.name                   
+                  .row
+                    .col-lg-3
+                      Comments:
+                    .col-lg-9
+                      = "-"
+              .col-lg-4
+                .transaction-details
+                  .row
+                    1000 x _____ = _________
+                  .row
+                    500 x _____ = _________
+                  .row
+                    200 x _____ = _________
+                  .row
+                    1000 x _____ = _________
+                  .row
+                    100 x _____ = _________
+                  .row
+                    50 x _____ = _________
+                  .row
+                    20 x _____ = _________
+                  .row
+                    10 x _____ = _________
+                  .row
+                    5 x _____ = _________
+                  .row
+                    1 x _____ = _________
+            %p
+              Sender has checked the accuracy of the information above and guarrantees the lawfullness of this transaction.
+
+              .col-lg-5
+                .amount-breakdown

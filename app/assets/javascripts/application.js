@@ -35,6 +35,7 @@
 //= require jquery.flot.pie.min
 //= require jquery.flot.resize
 //= require jquery.flot.grow
+//= require jquery.print
 //= require xcharts.min
 //= require d3.v3.min
 //= require cal-heatmap.min

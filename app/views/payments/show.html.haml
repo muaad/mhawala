@@ -15,7 +15,7 @@
     .pull-right
       .btn-toolbar{role: "toolbar"}
         .btn-group
-          %a.btn.btn-default{href: "#"}
+          %a#printReceipt.btn.btn-default{href: "#"}
             %i.fa.fa-print
             Print
           %a.btn.btn-default{href: "#", "data-toggle" => "modal", "data-target" => "#withdraw_payment_modal"}
@@ -48,6 +48,7 @@
           .row
             .col-lg-4
               %i.fa.fa-money
+              Currency:
               = @payment.currency.name
             .col-lg-4
               %i.fa.fa-user
@@ -95,6 +96,8 @@
                 %i.fa.fa-clock-o
                 Withdrawn at: 
                 = time_formater(@payment.withdrawn_at)
+
+  = render 'payments/receipt'
 
   #withdraw_payment_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-dialog

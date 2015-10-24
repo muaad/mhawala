@@ -109,4 +109,8 @@ $(function() {
 	  	document.location = '/payments/' + id + '/edit'
 	  }
 	});
+
+	$('#printReceipt').click(function(){
+	     $(".receipt").printThis();
+	});
 });
