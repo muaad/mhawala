@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024113244) do
+ActiveRecord::Schema.define(version: 20151024113715) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -80,9 +80,11 @@ ActiveRecord::Schema.define(version: 20151024113244) do
     t.string   "sent_to"
     t.integer  "from_agent_id"
     t.integer  "to_agent_id"
+    t.integer  "currency_id"
   end
 
   add_index "payments", ["account_id"], name: "index_payments_on_account_id"
+  add_index "payments", ["currency_id"], name: "index_payments_on_currency_id"
   add_index "payments", ["from_agent_id"], name: "index_payments_on_from_agent_id"
   add_index "payments", ["recipient_id"], name: "index_payments_on_recipient_id"
   add_index "payments", ["recorded_by_id"], name: "index_payments_on_recorded_by_id"
