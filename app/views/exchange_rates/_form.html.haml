@@ -11,10 +11,18 @@
                   %li= msg
           .form-group
             %lable Currency One
-            = f.text_field :currency_one, class: "form-control"
+            / = f.text_field :currency_one, class: "form-control"
+            %select.form-control{name: "exchange_rate[currency_one_id]"}
+              - Currency.all.each do |currency|
+                %option{value: currency.id}
+                  = "#{currency.symbol} - #{currency.name}"
           .form-group
             %lable Currency Two
-            = f.text_field :currency_two, class: "form-control"
+            / = f.text_field :currency_two, class: "form-control"
+            %select.form-control{name: "exchange_rate[currency_two_id]"}
+              - Currency.all.each do |currency|
+                %option{value: currency.id}
+                  = "#{currency.symbol} - #{currency.name}"
           .form-group
             %lable Buying
             = f.text_field :buying, class: "form-control"

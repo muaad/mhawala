@@ -15,4 +15,5 @@ class Payment < ActiveRecord::Base
   belongs_to :from_agent, class_name: "Agent"
   belongs_to :to_agent, class_name: "Agent"
   belongs_to :account
+  belongs_to :currency
 end

@@ -83,6 +83,6 @@ class ExchangeRatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def exchange_rate_params
-      params.require(:exchange_rate).permit(:account_id, :currency_one, :currency_two, :buying, :selling, :city)
+      params.require(:exchange_rate).permit(:account_id, :currency_one_id, :currency_two_id, :buying, :selling, :city)
     end
 end

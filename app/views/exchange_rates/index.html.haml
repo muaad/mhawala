@@ -49,9 +49,9 @@
                 %td
                   = check_box_tag "exchange_rate[exchange_rate.id]", exchange_rate.id
                 %td
-                  = exchange_rate.currency_one
+                  = link_to exchange_rate.currency_one.name, currency_path(exchange_rate.currency_one)
                 %td
-                  = exchange_rate.currency_two
+                  = link_to exchange_rate.currency_two.name, currency_path(exchange_rate.currency_two)
                 %td.editable.buying{data: { id: exchange_rate.id }}
                   = exchange_rate.buying
                 %td.editable.selling{data: { id: exchange_rate.id }}

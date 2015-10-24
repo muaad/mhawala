@@ -1,22 +1,34 @@
-= form_for @currency do |f|
-  - if @currency.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@currency.errors.count, "error")} prohibited this currency from being saved:"
-      %ul
-        - @currency.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :short_name
-    = f.text_field :short_name
-  .field
-    = f.label :country
-    = f.text_field :country
-  .field
-    = f.label :symbol
-    = f.text_field :symbol
-  .actions
-    = f.submit 'Save'
+.row
+  .col-lg-12
+    %section.panel
+      = form_for @currency do |f|
+        .panel-body
+          - if @currency.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@currency.errors.count, "error")} prohibited this currency from being saved:"
+              %ul
+                - @currency.errors.full_messages.each do |msg|
+                  %li= msg
+          .form-group
+            %lable Name
+            = f.text_field :name, class: "form-control"
+          .form-group
+            %lable Short Name
+            = f.text_field :short_name, class: "form-control"
+          .form-group
+            %lable Country
+            %select.form-control{name: "currency[country]"}
+              - ['USA', 'UK', 'Europe', 'Kenya', 'Somalia', 'Ethiopia'].each do |country|
+                %option{value: country}
+                  = country
+          .form-group
+            %lable Symbol
+            %select.form-control{name: "currency[symbol]"}
+              - {dollar: '$', pound: '£', euro: '€', 'Kenya Shilling' => 'KSH', 'Somali Shilling' => 'SSH', 'Ethiopian Bir' => 'EBIR'}.each do |currency, symbol|
+                %option{value: symbol}
+                  = "#{symbol} - #{currency}"
+        .panel-footer
+          .actions.pull-right
+            %button.btn.btn-primary.btn-rounded{"data-original-title" => "", :title => "", :type => "submit"}
+              %i.fa.fa-save
+              Save

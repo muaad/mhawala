@@ -24,6 +24,7 @@ gem 'simple_xlsx_reader'
 gem 'spreadsheet'
 gem 'annotate'
 gem "font-awesome-rails"
+gem 'country_select'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_20]
