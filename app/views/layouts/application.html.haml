@@ -7,6 +7,7 @@
         / start:bootstrap v3.2.0
         = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false
         = javascript_include_tag 'application', 'data-turbolinks-track' => false
+        = csrf_meta_tags
         / %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}
         / start:style for this page
         / <link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">
@@ -106,7 +107,7 @@
           / sidebar menu: : style can be found in sidebar.less
           %ul.sidebar-menu
             %li.active
-              %a{:href => "#"}
+              %a{:href => reports_dashboard_path}
                 %i.fa.fa-dashboard
                 %span Dashboard
             %li
@@ -149,6 +150,14 @@
                   %a{:href => edit_user_registration_path}
                     %i.fa.fa-edit
                     Edit your profile
+                %li
+                  %a{:href => exchange_rates_path}
+                    %i.fa.fa-money
+                    Exchange Rates
+                %li
+                  %a{:href => "commissions_path"}
+                    %i.fa.fa-money
+                    Commission
             %li.treeview
               %a{:href => ""}
                 %i.fa.fa-bar-chart-o
