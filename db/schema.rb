@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024115648) do
+ActiveRecord::Schema.define(version: 20151024190242) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(version: 20151024115648) do
     t.string   "reference_number"
     t.string   "transaction_number"
     t.integer  "account_id"
-    t.boolean  "sent",               default: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.string   "channel",            default: "Hawala"
-    t.boolean  "withdrawn",          default: false
+    t.boolean  "sent",                   default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "channel",                default: "Hawala"
+    t.boolean  "withdrawn",              default: false
     t.integer  "recorded_by_id"
     t.integer  "withdrawn_by_id"
     t.datetime "withdrawn_at"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20151024115648) do
     t.integer  "from_agent_id"
     t.integer  "to_agent_id"
     t.integer  "currency_id"
+    t.integer  "withdrawal_currency_id"
   end
 
   add_index "payments", ["account_id"], name: "index_payments_on_account_id"
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 20151024115648) do
   add_index "payments", ["recorded_by_id"], name: "index_payments_on_recorded_by_id"
   add_index "payments", ["sender_id"], name: "index_payments_on_sender_id"
   add_index "payments", ["to_agent_id"], name: "index_payments_on_to_agent_id"
+  add_index "payments", ["withdrawal_currency_id"], name: "index_payments_on_withdrawal_currency_id"
   add_index "payments", ["withdrawn_by_id"], name: "index_payments_on_withdrawn_by_id"
 
   create_table "user_accounts", force: :cascade do |t|
