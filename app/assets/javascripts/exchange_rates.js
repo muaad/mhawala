@@ -87,5 +87,12 @@ $(function() {
 	  }
 	});
 
+	if (window.location.pathname.indexOf("new") >= 0 && window.location.pathname.indexOf("exchange_rates") >= 0) {
+		var currency_one = $('#currency_one').attr('value')
+		var currency_two = $('#currency_two').attr('value')
+		$('select[name="exchange_rate[currency_one_id]"] option[value="'+ currency_one +'"]').attr('selected', 'selected');
+		$('select[name="exchange_rate[currency_two_id]"] option[value="'+ currency_two +'"]').attr('selected', 'selected');
+	}
+
 	setEditable();
 });

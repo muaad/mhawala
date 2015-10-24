@@ -110,6 +110,29 @@ $(function() {
 	  }
 	});
 
+	$("#withdrawal_currency").change(function() {
+		if ($("#from_currency").val() != $("#withdrawal_currency").val()) {
+			var fromCurrency = $("#from_currency").val();
+			var toCurrency = $("#withdrawal_currency").val();
+			var toCity = $("#city").val();
+      $.ajax({
+        type: "GET",
+        url: '/currencies/' + fromCurrency + '/exchange?to_currency=' + toCurrency + '&amount=' + $("#amount").val() + '&city=' + toCity,
+        dataType: 'json',
+        success: function(data, textStatus, jqXhr) {
+        	var converted_value = data.converted_value;
+        	if (converted_value.startsWith("You haven't set the exchange rate for")) {
+        		converted_value += " <a class='btn btn-sm btn-success' href='/exchange_rates/new?currency_one=" + fromCurrency + "&currency_two=" + toCurrency + "&city=" + toCity + "'><div class='fa fa-plus'> Set it now here."
+        	};
+          $("#converted-value").html(converted_value);
+        }
+      });
+    }
+    else {
+    	$("#converted-value").html($("#amount").val());
+    }
+	})
+
 	$('#printReceipt').click(function(){
 	     $(".receipt").printThis();
 	});

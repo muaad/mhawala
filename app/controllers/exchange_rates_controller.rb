@@ -15,6 +15,11 @@ class ExchangeRatesController < ApplicationController
   # GET /exchange_rates/new
   def new
     @exchange_rate = ExchangeRate.new
+    if !params[:currency_one].blank? && !params[:currency_two].blank? && !params[:city].blank?
+      @exchange_rate.currency_one_id = params[:currency_one]
+      @exchange_rate.currency_two_id = params[:currency_two]
+      @exchange_rate.city = params[:city]
+    end
   end
 
   # GET /exchange_rates/1/edit

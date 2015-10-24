@@ -1,5 +1,5 @@
 class CurrenciesController < ApplicationController
-  before_action :set_currency, only: [:show, :edit, :update, :destroy]
+  before_action :set_currency, only: [:show, :edit, :update, :destroy, :exchange]
 
   # GET /currencies
   # GET /currencies.json
@@ -59,6 +59,12 @@ class CurrenciesController < ApplicationController
       format.html { redirect_to currencies_url, notice: 'Currency was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def exchange
+    converted_value = @currency.exchange(params[:amount], params[:to_currency])
+    puts converted_value
+    render json: {converted_value: converted_value}
   end
 
   private

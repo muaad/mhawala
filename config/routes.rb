@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :payments
 
   get "/users/upload" => "users#upload_page", as: "users_upload_page"
+  get "/currencies/:id/exchange" => "currencies#exchange", as: "exchange_currencies"
 
   resources :accounts
   devise_for :users, :controllers => {:registrations => "users/registrations"}

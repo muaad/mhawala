@@ -112,11 +112,23 @@
               Issue Withdrawal
         = form_tag withdraw_path(@payment) do |f|
           .modal-body
-            %label
-              - if @payment.withdrawn
+            - if @payment.withdrawn
+              %label
                 Are you sure you want to cancel withdrawal?
-              - else
-                Are you sure you want to make this withdrawal?
+            - else
+              .panel.panel-info
+                .panel-heading
+                  %h3.panel-title Withdrawal Currency
+                .panel-body
+                  = hidden_field_tag :from_currency, @payment.currency_id
+                  = hidden_field_tag :amount, @payment.amount
+                  = hidden_field_tag :city, @payment.sent_to
+                  .form-group
+                    %select#withdrawal_currency.form-control{name: "withdrawal_currency"}
+                      - Currency.all.each do |currency|
+                        %option{value: currency.id}
+                          = currency.name
+                  %p#converted-value
           .modal-footer
             %button.btn.btn-danger{"data-dismiss" => "modal", :type => "button"} 
               %i.fa.fa-times

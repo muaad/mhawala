@@ -141,7 +141,7 @@ class PaymentsController < ApplicationController
   end
 
   def withdraw
-    @payment.update(withdrawn: !@payment.withdrawn, withdrawn_by_id: current_user.id)
+    @payment.update(withdrawn: !@payment.withdrawn, withdrawn_by_id: current_user.id, withdrawal_currency_id: params[:withdrawal_currency])
     @payment.update(withdrawn_at: Time.now) if @payment.withdrawn
     redirect_to @payment, notice: @payment.withdrawn ? "#{@payment.amount} has successfully been withdrawn." : "withdrawal has been cancelled!"
   end
@@ -154,6 +154,6 @@ class PaymentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payment_params
-      params.require(:payment).permit(:sender_id, :recipient_id, :amount, :reference_number, :transaction_number, :account_id, :sent, :channel, :withdrawn, :recorded_by_id, :withdrawn_by_id, :withdrawn_at, :sent_from, :sent_to, :currency_id)
+      params.require(:payment).permit(:sender_id, :recipient_id, :amount, :reference_number, :transaction_number, :account_id, :sent, :channel, :withdrawn, :recorded_by_id, :withdrawn_by_id, :withdrawn_at, :sent_from, :sent_to, :currency_id, :withdrawal_currency_id)
     end
 end
