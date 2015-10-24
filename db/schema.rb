@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024113715) do
+ActiveRecord::Schema.define(version: 20151024114018) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name"
@@ -55,11 +55,15 @@ ActiveRecord::Schema.define(version: 20151024113715) do
     t.float    "buying"
     t.float    "selling"
     t.string   "city"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "currency_one_id"
+    t.integer  "currency_two_id"
   end
 
   add_index "exchange_rates", ["account_id"], name: "index_exchange_rates_on_account_id"
+  add_index "exchange_rates", ["currency_one_id"], name: "index_exchange_rates_on_currency_one_id"
+  add_index "exchange_rates", ["currency_two_id"], name: "index_exchange_rates_on_currency_two_id"
 
   create_table "payments", force: :cascade do |t|
     t.integer  "sender_id"
