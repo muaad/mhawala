@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :currencies
+
   get 'reports/dashboard'
 
   get 'reports/remittances'

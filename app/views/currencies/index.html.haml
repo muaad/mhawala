@@ -1,0 +1,27 @@
+%h1 Listing currencies
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Short name
+      %th Country
+      %th Symbol
+      %th
+      %th
+      %th
+
+  %tbody
+    - @currencies.each do |currency|
+      %tr
+        %td= currency.name
+        %td= currency.short_name
+        %td= currency.country
+        %td= currency.symbol
+        %td= link_to 'Show', currency
+        %td= link_to 'Edit', edit_currency_path(currency)
+        %td= link_to 'Destroy', currency, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Currency', new_currency_path
